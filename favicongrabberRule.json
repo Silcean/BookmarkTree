@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "priority": 1,
+        "action": {
+            "type": "allow"
+        },
+        "condition": {
+            "urlFilter": "favicongrabber.com",
+            "domains": [
+                "localhost"
+            ],
+            "resourceTypes": [
+                "other"
+            ]
+        }
+    }
+]

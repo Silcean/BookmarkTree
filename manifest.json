@@ -1,0 +1,50 @@
+{
+  "name": "Visual Bookmark Tree",
+  "description": "Adds a grafical gui to bookmarks in the newtab window",
+  "version": "1.0",
+  "manifest_version": 3,
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "favicongrabberRule",
+        "enabled": true,
+        "path": "favicongrabberRule.json"
+      }
+    ]
+  },
+  "permissions": [
+    "tabs",
+    "bookmarks",
+    "activeTab",
+    "storage",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  "host_permissions": [
+    "https://favicongrabber.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://fridgegame.com/"
+      ],
+      "js": [
+        "contentScript.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/*",
+        "css/*"
+      ],
+      "matches": [
+        "https://fridgegame.com/*"
+      ]
+    }
+  ]
+}
