@@ -64,8 +64,6 @@ chrome.runtime.onMessage.addListener(
         } else if(request.getPath != undefined){
             sendResponse({getPath: chrome.runtime.getURL(request.getPath)});
         }
-
-
     });
 
 

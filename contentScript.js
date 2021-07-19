@@ -51,15 +51,12 @@ let iconsPreDictionary = {
     'twitter': '.svg',
     'edvschule-plattling': '.ico',
     '9cache': '.ico',
-    'bluetooth': '.png'
-    /*
-'acropolis': '.png',
-'catsuka': '.png',
-'chromeexperiments': '.png',
-'chrono': '.png',
+    'bluetooth': '.png',
+
+'catsuka': '.ico',
+'chromeexperiments': '.ico',
 'curseforge': '.png',
-'dl': '.png',
-'entwickler': '.png',
+'entwickler': '.png',/*
 'explosm': '.png',
 'factoryidle': '.png',
 'feastforaking': '.png',
@@ -111,7 +108,9 @@ head.appendChild(cssnewtab);
 let cssfira_code=document.createElement("link");
 cssfira_code.rel="stylesheet";
 cssfira_code.href=relpath+"css/fira_code.css";
-
+body.removeAttribute('bgcolor');
+body.removeAttribute('text');
+body.removeAttribute('link');
 body.innerHTML = "";
 let bm = document.createElement("div");
 bm.id = "bm";
@@ -202,6 +201,17 @@ getBaseUrl = (url) => {
     */
 }
 
+function getBaseFaviconUrl() {
+    const faviconUrl = new URL("chrome://favicon2/");
+    faviconUrl.searchParams.set("size", "16");
+    return faviconUrl
+}
+function getFaviconForPageURL(url, isSyncedUrlForHistoryUi, remoteIconUrlForUma="", size=16) {
+    const faviconUrl = getBaseFaviconUrl();
+    faviconUrl.searchParams.set("size", size);
+    faviconUrl.searchParams.set("page_url", url);
+    return faviconUrl.toString()
+}
 
 removeBm = (trashid) => {
     let bmid = trashid.substring(('remove').length, trashid.length);
@@ -410,7 +420,8 @@ drawBM = (obj, bmcontainerdiv, depth) => {
                 return;
             }
         };
-        img.src = faviconurl(obj.url);
+       img.src = faviconurl(obj.url);
+       // img.src= getFaviconForPageURL(obj.url,false);
 
 
     //img.src=getBaseUrl(obj.url) + '/favicon.ico';

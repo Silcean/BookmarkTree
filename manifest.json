@@ -20,16 +20,13 @@
     "declarativeNetRequest",
     "declarativeNetRequestFeedback"
   ],
-  "host_permissions": [
-    "https://favicongrabber.com/*"
-  ],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
       "matches": [
-        "https://fridgegame.com/"
+        "https://blank.org/"
       ],
       "js": [
         "contentScript.js"
@@ -40,11 +37,18 @@
     {
       "resources": [
         "icons/*",
-        "css/*"
+        "css/*",
+        "chrome://favicon2/*",
+        "brave://favicon2/*",
+        "chrome://*",
+        "brave://*"
       ],
       "matches": [
-        "https://fridgegame.com/*"
+        "https://blank.org/*"
       ]
     }
-  ]
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; img-src 'chrome://favicon2/;"
+ }
 }
