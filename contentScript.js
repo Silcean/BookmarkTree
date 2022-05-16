@@ -29,7 +29,7 @@ img.src = url;
 
 let sites = [
     'https://smile.amazon.de',
-    'https://imgur.com',
+    // 'https://imgur.com',
     'https://www.youtube.com/feed/subscriptions',
     'https://www.twitter.com',
     'https://www.reddit.com',
@@ -38,8 +38,9 @@ let sites = [
     'https://owa.edvschule-plattling.de/owa/auth/logon.aspx?replaceCurrent=1&url=https%3a%2f%2fowa.edvschule-plattling.de%2fowa%2f',
     'https://www.netflix.com/browse',
     'https://www.humblebundle.com',
-    'https://www.photopea.com'];
-let names = ['Amazon', 'Imgur', 'Youtube', 'Twitter', 'Reddit', 'Twitch', 'Whatsapp', 'Schulmail', 'Netflix', 'Humble Bundle', 'Photopea'];
+    'https://www.photopea.com'
+];
+let names = ['Amazon', /*'Imgur',*/ 'Youtube', 'Twitter', 'Reddit', 'Twitch', 'Whatsapp', 'Schulmail', 'Netflix', 'Humble Bundle', 'Photopea'];
 
 let iconsPreDictionary = {
     'howlongtobeat': '.png',
@@ -53,61 +54,67 @@ let iconsPreDictionary = {
     '9cache': '.ico',
     'bluetooth': '.png',
 
-'catsuka': '.ico',
-'chromeexperiments': '.ico',
-'curseforge': '.png',
-'entwickler': '.png',/*
-'explosm': '.png',
-'factoryidle': '.png',
-'feastforaking': '.png',
-'fridgegame': '.png',
-'geometrize': '.png',
-'github': '.png',
-'hackertyper': '.png',
-'keychron': '.png',
-'lingojam': '.png',
-'media': '.png',
-'minecraftforum': '.png',
-'minecraftmaps': '.png',
-'mrgarretto': '.png',
-'nomada': '.png',
-'notion': '.png',
-'oldgamesdownload': '.png',
-'polygon': '.png',
-'projectmaldonado': '.png',
-'redd': '.png',
-'sbnation': '.png',
-'scaryforkids': '.png',
-'scpwiki': '.png',
-'seriencamp-watchroom': '.png',
-'strawpoll': '.png',
-'teardowngame': '.png',
-'textlog': '.png',
-'thebookofshaders': '.png',
-'thejimquisition': '.png',
-'thetruesize': '.png',
-'threadless': '.png',
-'townofsilenthill': '.png',
-'twimg': '.png',
-'userinyerface': '.png',
-'zbfs': '.png',
-*/
+    'catsuka': '.ico',
+    'chromeexperiments': '.ico',
+    'curseforge': '.png',
+    'twimg': '.svg',
+    'teardowngame': '.jpg',
+    'hackertyper': '.ico'
+        /*
+        'explosm': '.png',
+        'factoryidle': '.png',
+        'feastforaking': '.png',
+        'fridgegame': '.png',
+        'geometrize': '.png',
+        'github': '.png',
+        'hackertyper': '.png',
+        'keychron': '.png',
+        'lingojam': '.png',
+        'media': '.png',
+        'minecraftforum': '.png',
+        'minecraftmaps': '.png',
+        'mrgarretto': '.png',
+        'nomada': '.png',
+        'notion': '.png',
+        'oldgamesdownload': '.png',
+        'polygon': '.png',
+        'projectmaldonado': '.png',
+        'redd': '.png',
+        'sbnation': '.png',
+        'scaryforkids': '.png',
+        'scpwiki': '.png',
+        'seriencamp-watchroom': '.png',
+        'strawpoll': '.png',
+        'teardowngame': '.png',
+        'textlog': '.png',
+        'thebookofshaders': '.png',
+        'thejimquisition': '.png',
+        'thetruesize': '.png',
+        'threadless': '.png',
+        'townofsilenthill': '.png',
+        'twimg': '.png',
+        'userinyerface': '.png',
+        'zbfs': '.png',
+        */
 };
-let relpath="chrome-extension://fkiejkbalijkjgcihgedcjpafokknkad/"
-let trashsrc=relpath+"icons/trash.svg";
-let onerrorsrc=relpath+"icons/site.png";
-let savedIconPath = relpath+"icons/";
+//let relpath="chrome-extension://fkiejkbalijkjgcihgedcjpafokknkad/"
+let relpath = "";
+let trashsrc = relpath + "icons/trash.svg";
+let onerrorsrc = relpath + "icons/site.png";
+let savedIconPath = relpath + "icons/";
 let iconerrors = {};
 let head = document.getElementsByTagName('head')[0];
 let body = document.getElementsByTagName('body')[0];
 
-let cssnewtab=document.createElement("link");
-cssnewtab.rel="stylesheet";
-cssnewtab.href=relpath+"css/newtab.css";
+let cssnewtab = document.createElement("link");
+cssnewtab.rel = "stylesheet";
+cssnewtab.href = relpath + "css/newtab.css";
 head.appendChild(cssnewtab);
-let cssfira_code=document.createElement("link");
-cssfira_code.rel="stylesheet";
-cssfira_code.href=relpath+"css/fira_code.css";
+let cssfira_code = document.createElement("link");
+cssfira_code.rel = "stylesheet";
+cssfira_code.href = relpath + "css/fira_code.css";
+
+head.appendChild(cssfira_code);
 body.removeAttribute('bgcolor');
 body.removeAttribute('text');
 body.removeAttribute('link');
@@ -123,6 +130,10 @@ let list = document.createElement("ul");
 list.id = 'list';
 listdiv.appendChild(list);
 body.appendChild(listdiv);
+let searchdiv = document.createElement("div");
+searchdiv.id = 'search';
+body.appendChild(searchdiv);
+
 let tree;
 let currentlyActive = [];
 let blacklist = ["Mozilla Firefox"];
@@ -148,7 +159,7 @@ encodeImagetoBase64=(url)=>{
 
 */
 sanitizeUrl = (url) => {
-    if (url.indexOf('https://') != -1) {//remove https://
+    if (url.indexOf('https://') != -1) { //remove https://
         url = url.substring('https://'.length, url.length);
     } else if (url.indexOf('http://') != -1) {
         //remove http://
@@ -156,7 +167,7 @@ sanitizeUrl = (url) => {
     }
 
 
-    if (url.lastIndexOf('/') === url.length - 1) {//remove / if at end of string
+    if (url.lastIndexOf('/') === url.length - 1) { //remove / if at end of string
         url = url.substring(0, url.length - 1);
     }
 
@@ -206,7 +217,8 @@ function getBaseFaviconUrl() {
     faviconUrl.searchParams.set("size", "16");
     return faviconUrl
 }
-function getFaviconForPageURL(url, isSyncedUrlForHistoryUi, remoteIconUrlForUma="", size=16) {
+
+function getFaviconForPageURL(url, isSyncedUrlForHistoryUi, remoteIconUrlForUma = "", size = 16) {
     const faviconUrl = getBaseFaviconUrl();
     faviconUrl.searchParams.set("size", size);
     faviconUrl.searchParams.set("page_url", url);
@@ -227,7 +239,7 @@ removeBm = (trashid) => {
 }
 
 removeFromActiveArray = (element) => {
-    let filtered = currentlyActive.filter(function (value) {
+    let filtered = currentlyActive.filter(function(value) {
         return value[0] !== element[0] && value[1] !== element[1];
     })
     currentlyActive = filtered;
@@ -238,7 +250,6 @@ removeFromActiveArray = (element) => {
 
 //#region Drawing Tree
 drawTree = () => {
-
     let depth = 0;
     let thumbnaildiv = document.createElement("div");
     thumbnaildiv.className = 'thumbnailcontainer';
@@ -264,24 +275,24 @@ toggleFolderbyClassIntoDisplaydiv = (sender) => {
     console.log('Click on Folder: ' + sender.id);
     let objectsfolder = document.getElementById('folder' + sender.id + 'content');
     let classes = objectsfolder.className.split(' ');
-    if (classes.indexOf('active') != -1) {//isopen=> set to collapse
+    if (classes.indexOf('active') != -1) {
+        //isopen=> set to collapse
         objectsfolder.classList.remove('active');
         sender.classList.remove('active');
         removeFromActiveArray([classes[1], sender.id]);
-    } else {//iscollapes => set to open
+    } else {
+        //iscollapes => set to open
         //see if other thumbnail in same region is open
         let elementActiveInSameDisplayContainer = currentlyActive.find(elem => elem[0] === classes[1]);
-        if (elementActiveInSameDisplayContainer != undefined) {// one is open
+        if (elementActiveInSameDisplayContainer != undefined) { // one is open
 
             //remove display
             let activediv = document.getElementById('folder' + elementActiveInSameDisplayContainer[1] + 'content');
             activediv.classList.remove('active');
-
             //remove active status from thumbnail
 
             let activethumbnail = document.getElementById(elementActiveInSameDisplayContainer[1]);
             activethumbnail.classList.remove('active');
-
             //remove from list of currently active thumbnails
             removeFromActiveArray(elementActiveInSameDisplayContainer);
         };
@@ -297,12 +308,12 @@ recursiveDrawObj = (obj, thumbnaildiv, displaydiv, bmdiv, depth) => {
     }
     if (obj.title == "") {
         obj.children.forEach(e => {
-            recursiveDrawObj(e, thumbnaildiv, displaydiv, depth);
+            recursiveDrawObj(e, thumbnaildiv, displaydiv, bmdiv, depth);
         });
     } else {
-        if (obj != null && obj.url != undefined) {// is bookmark
+        if (obj != null && obj.url != undefined) { // is bookmark
             drawBM(obj, bmdiv, depth);
-        } else if (obj != null && obj.id != undefined) {//is folder
+        } else if (obj != null && obj.id != undefined) { //is folder
             depth++;
             drawFolder(obj, thumbnaildiv, displaydiv, depth);
         }
@@ -342,7 +353,7 @@ drawFolder = (obj, superthumbnaildiv, superdisplaydiv, depth) => {
 
     var thumbnail = document.createElement("div");
     thumbnail.id = obj.id;
-    thumbnail.onclick = function (e) {
+    thumbnail.onclick = function(e) {
         toggleFolderbyClassIntoDisplaydiv(e.target);
     };
     //folder title
@@ -399,83 +410,83 @@ drawFolder = (obj, superthumbnaildiv, superdisplaydiv, depth) => {
 }
 
 drawBM = (obj, bmcontainerdiv, depth) => {
-    var bmdiv = document.createElement("div");
-    bmdiv.className = 'tile linktobm' + obj.id + ' depth' + depth;
-    bmdiv.id = obj.id;
+        var bmdiv = document.createElement("div");
+        bmdiv.className = 'tile linktobm' + obj.id + ' depth' + depth;
+        bmdiv.id = obj.id;
 
-    var titlespan = document.createElement('span');
-    titlespan.innerHTML += obj.title;
+        var titlespan = document.createElement('span');
+        titlespan.innerHTML += obj.title;
 
-    let img = document.createElement("img");
+        let img = document.createElement("img");
 
-    img.onload =
-        function () {
-            if ('naturalHeight' in this) {
-                if (this.naturalHeight + this.naturalWidth === 0) {
+        img.onload =
+            function() {
+                if ('naturalHeight' in this) {
+                    if (this.naturalHeight + this.naturalWidth === 0) {
+                        this.onerror();
+                        return;
+                    }
+                } else if (this.width + this.height == 0) {
                     this.onerror();
                     return;
                 }
-            } else if (this.width + this.height == 0) {
-                this.onerror();
-                return;
-            }
-        };
-       img.src = faviconurl(obj.url);
-       // img.src= getFaviconForPageURL(obj.url,false);
+            };
+        img.src = faviconurl(obj.url);
+        // img.src= getFaviconForPageURL(obj.url,false);
 
 
-    //img.src=getBaseUrl(obj.url) + '/favicon.ico';
-    img.onerror = function () {
-        iconerrors[sanitizeUrl(this.currentSrc.substring(0, this.currentSrc.indexOf('.')))] = '.png';
+        //img.src=getBaseUrl(obj.url) + '/favicon.ico';
+        img.onerror = function() {
+            iconerrors[sanitizeUrl(this.currentSrc.substring(0, this.currentSrc.indexOf('.')))] = '.png';
 
-    img.src = onerrorsrc;
-    }
-    img.className = 'icon';
-
-    let a = document.createElement("a");
-    a.href = obj.url;
-
-    let imgtrash = document.createElement("img");
-    //imgtrash.src = './icons/trash-2.svg';
-    imgtrash.src = trashsrc;
-    imgtrash.id = 'remove' + obj.id;
-    imgtrash.className = 'delicon';
-
-    imgtrash.onclick = function (e) {
-        removeBm(e.target.id);
-    };
-    onclicklisteners.push(imgtrash.id);
-    /*
-        let shorturl = sanitizeUrl(getBaseUrl(obj.url));
-        //TODO Refactor, so sendmessage is in extra method
-        if (imagedictionary!=undefined&&imagedictionary[shorturl] != undefined) {
-            img.url = imagedictionary[shorturl];
-        } else {
-            sentImagerequests++;
-            chrome.runtime.sendMessage({ getFaviconUrl: [obj.id, obj.url] }, (response) => {
-                gotimageResponses++;
-                if (response.getFaviconUrl != 'unable') {
-                    img.src = response.getFaviconUrl[1];
-                } else {
-                    imagesWithNoSrc.push([obj.id, obj.url]);
-                }
-                if (sentImagerequests === gotimageResponses) {
-                    sentImagerequests = 0;
-                    gotimageResponses = 0;
-                    chrome.runtime.sendMessage({ getFaviconUrlList: imagesWithNoSrc }, (response) => {
-                    });
-                }
-            });
-    
+            img.src = onerrorsrc;
         }
-    */
-    a.appendChild(img);
-    a.appendChild(titlespan);//write name
-    bmdiv.appendChild(a);
-    bmdiv.appendChild(imgtrash);
-    bmcontainerdiv.appendChild(bmdiv);
-}
-//#endregion
+        img.className = 'icon';
+
+        let a = document.createElement("a");
+        a.href = obj.url;
+
+        let imgtrash = document.createElement("img");
+        //imgtrash.src = './icons/trash-2.svg';
+        imgtrash.src = trashsrc;
+        imgtrash.id = 'remove' + obj.id;
+        imgtrash.className = 'delicon';
+
+        imgtrash.onclick = function(e) {
+            removeBm(e.target.id);
+        };
+        onclicklisteners.push(imgtrash.id);
+        /*
+            let shorturl = sanitizeUrl(getBaseUrl(obj.url));
+            //TODO Refactor, so sendmessage is in extra method
+            if (imagedictionary!=undefined&&imagedictionary[shorturl] != undefined) {
+                img.url = imagedictionary[shorturl];
+            } else {
+                sentImagerequests++;
+                chrome.runtime.sendMessage({ getFaviconUrl: [obj.id, obj.url] }, (response) => {
+                    gotimageResponses++;
+                    if (response.getFaviconUrl != 'unable') {
+                        img.src = response.getFaviconUrl[1];
+                    } else {
+                        imagesWithNoSrc.push([obj.id, obj.url]);
+                    }
+                    if (sentImagerequests === gotimageResponses) {
+                        sentImagerequests = 0;
+                        gotimageResponses = 0;
+                        chrome.runtime.sendMessage({ getFaviconUrlList: imagesWithNoSrc }, (response) => {
+                        });
+                    }
+                });
+    
+            }
+        */
+        a.appendChild(img);
+        a.appendChild(titlespan); //write name
+        bmdiv.appendChild(a);
+        bmdiv.appendChild(imgtrash);
+        bmcontainerdiv.appendChild(bmdiv);
+    }
+    //#endregion
 
 
 //#region Messages, and Listeners
@@ -541,8 +552,94 @@ chrome.runtime.sendMessage({ getFaviconUrlDictionary: "blbl" }, (response) => {
 */
 //#endregion
 
+//favorites list
 for (let i = 0; i < sites.length; i++) {
-    list.innerHTML += '<li>' + '<a href="' + sites[i] + '" >'
-        + '<div class=imgtile ><img  src="' + faviconurl(sites[i]) + '" ></div>  '
-        + names[i] + '</a></li>';
+    list.innerHTML += '<li>' + '<a href="' + sites[i] + '" >' +
+        '<div class=imgtile ><img  src="' + faviconurl(sites[i]) + '" ></div>  ' +
+        names[i] + '</a></li>';
 }
+
+createElement = (type, id, classlist, parent) => {
+    let element = document.createElement(type);
+    if (id) {
+        element.id = id;
+    }
+    element.classList = classlist;
+    parent.appendChild(element);
+    return element;
+}
+
+//searchbar
+search = () => {
+    resultlist.innerHTML = '';
+    term = searchinput.value.trim()
+    if (term != '') {
+        searchrecurse(tree, term);
+    }
+
+}
+
+searchrecurse = async(node, term) => {
+    if (node != null && node.url != undefined) { // is bookmark
+        //todo rate accuraacy of result for sorting
+        if (node.title.toLowerCase().includes(term.toLowerCase())) {
+            drawBMResult(node, resultlist);
+        }
+    } else if (node != null && node.id != undefined) { //is folder
+        if (blacklist.indexOf(obj.title) == -1) {
+            node.children.forEach(e => {
+                searchrecurse(e, term);
+            });
+        }
+    }
+
+}
+
+
+drawBMResult = (obj, bmcontainerdiv) => {
+        var bmdiv = document.createElement("li");
+        bmdiv.className = 'tile linktobm' + obj.id;
+
+        var titlespan = document.createElement('span');
+        titlespan.innerHTML += obj.title;
+
+        let img = document.createElement("img");
+
+        img.onload =
+            function() {
+                if ('naturalHeight' in this) {
+                    if (this.naturalHeight + this.naturalWidth === 0) {
+                        this.onerror();
+                        return;
+                    }
+                } else if (this.width + this.height == 0) {
+                    this.onerror();
+                    return;
+                }
+            };
+        img.src = faviconurl(obj.url);
+        // img.src= getFaviconForPageURL(obj.url,false);
+
+
+        //img.src=getBaseUrl(obj.url) + '/favicon.ico';
+        img.onerror = function() {
+            iconerrors[sanitizeUrl(this.currentSrc.substring(0, this.currentSrc.indexOf('.')))] = '.png';
+
+            img.src = onerrorsrc;
+        }
+        img.className = 'icon';
+
+        let a = document.createElement("a");
+        a.href = obj.url;
+
+        a.appendChild(img);
+        a.appendChild(titlespan); //write name
+        bmdiv.appendChild(a);
+        bmcontainerdiv.appendChild(bmdiv);
+    }
+    //#endregion
+let searchinput = createElement('input', "searchinput", '', searchdiv);
+let searchbutton = createElement('button', "searchbutton", '', searchdiv);
+searchbutton.innerHTML = 'search';
+searchbutton.onclick = search;
+let resultlist = createElement('ul', "resultlist", '', searchdiv);

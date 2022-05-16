@@ -1,54 +1,46 @@
 {
-  "name": "Visual Bookmark Tree",
-  "description": "Adds a grafical gui to bookmarks in the newtab window",
-  "version": "1.0",
-  "manifest_version": 3,
-  "declarative_net_request": {
-    "rule_resources": [
-      {
-        "id": "favicongrabberRule",
-        "enabled": true,
-        "path": "favicongrabberRule.json"
-      }
-    ]
-  },
-  "permissions": [
-    "tabs",
-    "bookmarks",
-    "activeTab",
-    "storage",
-    "declarativeNetRequest",
-    "declarativeNetRequestFeedback"
-  ],
-  "background": {
-    "service_worker": "background.js"
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "https://blank.org/"
-      ],
-      "js": [
-        "contentScript.js"
-      ]
+    "name": "Visual Bookmark Tree",
+    "description": "Adds a grafical gui to bookmarks in the newtab window",
+    "version": "1.0",
+    "manifest_version": 3,
+
+    "permissions": [
+        "tabs",
+        "bookmarks",
+        "activeTab",
+        "storage"
+    ],
+    "options_ui": {
+        "page": "popup.html",
+        "open_in_tab": false
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [{
+        "matches": [
+            "file:///*newtab.html"
+        ],
+        "js": [
+            "contentScript.js"
+        ]
+    }],
+    "web_accessible_resources": [{
+        "resources": [
+            "icons/*",
+            "css/*",
+            "chrome://favicon2/*",
+            "brave://favicon2/*",
+            "chrome://*",
+            "brave://*"
+        ],
+        "matches": [
+            "file:///*"
+        ],
+        "use_dynamic_url": true
+    }],
+    "action": {
+        "default_title": "Settings",
+        "default_popup": "popup.html"
     }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "icons/*",
-        "css/*",
-        "chrome://favicon2/*",
-        "brave://favicon2/*",
-        "chrome://*",
-        "brave://*"
-      ],
-      "matches": [
-        "https://blank.org/*"
-      ]
-    }
-  ],
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; img-src 'chrome://favicon2/;"
- }
 }
