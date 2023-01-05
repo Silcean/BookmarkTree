@@ -1,23 +1,22 @@
 let options = {
-    showToasts: true
+    enableSearch: true,
+    favorites: [],
+    blacklist: []
 };
 
 function sendValues() {
-    options.showToasts = document.getElementById('toast').checked;
-    chrome.storage.sync.set({ TwitterNFTBlockOptions: options }, function() {
+    options.enableSearch = document.getElementById('toast').checked;
+    chrome.storage.sync.set({ BetterBookmarksOptions: options }, function() {
         console.log('LocalStorage set to' + options);
     });
 }
 
-function resetBlockcount() {
-    chrome.storage.sync.set({ TwitterNFTBlockReset: true }, function() {
-        console.log('LocalStorage Reset set to' + options);
-    });
-}
-
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('resBlockCnt').addEventListener("click", function() {
-        resetBlockcount();
+    chrome.storage.sync.get(['BetterBookmarksOptions'], function(result) {
+
+        if (result.BetterBookmarksOptions != undefined) {
+            options = result;
+        }
     });
     document.getElementById('toast').addEventListener("click", function() { sendValues(); });
 });

@@ -1,31 +1,12 @@
-//returns the url for the favicon, either from web, or files
-// should be extendet to use brave://favicon/https://twitter.com/home
-// ok new plan:
-// i check if i have the favicon in the files.
-//if yes- great, if not, get it from:
-// http://favicongrabber.com/api/grab/www.wildelifecomic.com?pretty=true
-// and save it
-
-/*
-function fun_nam(url,back, op){
-var img = new Image();
-img.crossOrigin = 'Anonymous';
-img.onload = function(){
-    var canvas = document.createElement('CANVAS');
-    var ctx = canvas.getContext('2d');
-    var dataURL;
-    canvas.height = this.height;
-    canvas.width = this.width;
-    ctx.drawImage(this, 0, 0);
-    dataURL = canvas.toDataURL(op);
-    back(dataURL);
-    canvas = null; 
-};
-img.src = url;
-*/
-
-
 /* #region Initial Variables */
+let options = {
+    enableSearch: true
+};
+chrome.storage.sync.get(['BetterBookmarksOptions'], function(result) {
+    if (result.BetterBookmarksOptions != undefined) {
+        options = result;
+    }
+});
 
 let sites = [
     'https://smile.amazon.de',
@@ -41,7 +22,6 @@ let sites = [
     'https://www.photopea.com'
 ];
 let names = ['Amazon', /*'Imgur',*/ 'Youtube', 'Twitter', 'Reddit', 'Twitch', 'Whatsapp', 'Schulmail', 'Netflix', 'Humble Bundle', 'Photopea'];
-
 let iconsPreDictionary = {
     'howlongtobeat': '.png',
     'whatsapp': '.png',
@@ -98,7 +78,11 @@ let iconsPreDictionary = {
         */
 };
 //let relpath="chrome-extension://fkiejkbalijkjgcihgedcjpafokknkad/"
-let relpath = "";
+
+let relpath = chrome.runtime.getURL(
+    '/'
+  );
+  console.log('extension path='+relpath)
 let trashsrc = relpath + "icons/trash.svg";
 let onerrorsrc = relpath + "icons/site.png";
 let savedIconPath = relpath + "icons/";
@@ -306,7 +290,7 @@ recursiveDrawObj = (obj, thumbnaildiv, displaydiv, bmdiv, depth) => {
     if (blacklist.indexOf(obj.title) != -1) {
         return;
     }
-    if (obj.title == "") {
+    if (obj.title == "" && obj.children) {
         obj.children.forEach(e => {
             recursiveDrawObj(e, thumbnaildiv, displaydiv, bmdiv, depth);
         });
@@ -315,7 +299,10 @@ recursiveDrawObj = (obj, thumbnaildiv, displaydiv, bmdiv, depth) => {
             drawBM(obj, bmdiv, depth);
         } else if (obj != null && obj.id != undefined) { //is folder
             depth++;
-            drawFolder(obj, thumbnaildiv, displaydiv, depth);
+            if(obj.children.length!=0){//do not draw empty folders
+
+                drawFolder(obj, thumbnaildiv, displaydiv, depth);
+            }
         }
     }
 }
@@ -457,29 +444,29 @@ drawBM = (obj, bmcontainerdiv, depth) => {
         };
         onclicklisteners.push(imgtrash.id);
         /*
-            let shorturl = sanitizeUrl(getBaseUrl(obj.url));
-            //TODO Refactor, so sendmessage is in extra method
-            if (imagedictionary!=undefined&&imagedictionary[shorturl] != undefined) {
-                img.url = imagedictionary[shorturl];
-            } else {
-                sentImagerequests++;
-                chrome.runtime.sendMessage({ getFaviconUrl: [obj.id, obj.url] }, (response) => {
-                    gotimageResponses++;
-                    if (response.getFaviconUrl != 'unable') {
-                        img.src = response.getFaviconUrl[1];
-                    } else {
-                        imagesWithNoSrc.push([obj.id, obj.url]);
-                    }
-                    if (sentImagerequests === gotimageResponses) {
-                        sentImagerequests = 0;
-                        gotimageResponses = 0;
-                        chrome.runtime.sendMessage({ getFaviconUrlList: imagesWithNoSrc }, (response) => {
-                        });
-                    }
-                });
-    
-            }
-        */
+        let shorturl = sanitizeUrl(getBaseUrl(obj.url));
+        //TODO Refactor, so sendmessage is in extra method
+        if (imagedictionary!=undefined&&imagedictionary[shorturl] != undefined) {
+            img.url = imagedictionary[shorturl];
+        } else {
+            sentImagerequests++;
+            chrome.runtime.sendMessage({ getFaviconUrl: [obj.id, obj.url] }, (response) => {
+                gotimageResponses++;
+                if (response.getFaviconUrl != 'unable') {
+                    img.src = response.getFaviconUrl[1];
+                } else {
+                    imagesWithNoSrc.push([obj.id, obj.url]);
+                }
+                if (sentImagerequests === gotimageResponses) {
+                    sentImagerequests = 0;
+                    gotimageResponses = 0;
+                    chrome.runtime.sendMessage({ getFaviconUrlList: imagesWithNoSrc }, (response) => {
+                    });
+                }
+            });
+ 
+        }
+    */
         a.appendChild(img);
         a.appendChild(titlespan); //write name
         bmdiv.appendChild(a);
@@ -559,87 +546,119 @@ for (let i = 0; i < sites.length; i++) {
         names[i] + '</a></li>';
 }
 
-createElement = (type, id, classlist, parent) => {
-    let element = document.createElement(type);
-    if (id) {
-        element.id = id;
-    }
-    element.classList = classlist;
-    parent.appendChild(element);
-    return element;
-}
-
-//searchbar
-search = () => {
-    resultlist.innerHTML = '';
-    term = searchinput.value.trim()
-    if (term != '') {
-        searchrecurse(tree, term);
-    }
-
-}
-
-searchrecurse = async(node, term) => {
-    if (node != null && node.url != undefined) { // is bookmark
-        //todo rate accuraacy of result for sorting
-        if (node.title.toLowerCase().includes(term.toLowerCase())) {
-            drawBMResult(node, resultlist);
+chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === 'sync') {
+        if (changes.BetterBookmarksOptions != undefined) {
+            options = changes.BetterBookmarksOptions.newValue;
+            if (options.enableSearch) {
+                searchdiv.style.display = 'inline-block';
+            } else {
+                searchdiv.style.display = 'none';
+            }
         }
-    } else if (node != null && node.id != undefined) { //is folder
-        if (blacklist.indexOf(obj.title) == -1) {
-            node.children.forEach(e => {
-                searchrecurse(e, term);
-            });
+
+    }
+})
+
+if (options.enableSearch) {
+    createElement = (type, id, classlist, parent) => {
+        let element = document.createElement(type);
+        if (id) {
+            element.id = id;
         }
+        element.classList = classlist;
+        parent.appendChild(element);
+        return element;
     }
 
-}
+    //searchbar
+    search = () => {
+        clear();
+        term = searchinput.value.trim()
+        if (term != '') {
+            searchrecurse(tree, term);
+        }
+    }
+    clear = () => {
+        resultlist.innerHTML = '';
+    }
+
+    clickPress = (event) => {
+        if (event.keyCode == 13) {
+            search();
+        }
+    }
+    searchrecurse = async(node, term) => {
+        if (node != null && node.url != undefined) {
+            // is bookmark
+            //todo rate accuraacy of result for sorting
+            if (node.title.toLowerCase().includes(term.toLowerCase())) {
+                drawBMResult(node, resultlist);
+            }
+        } else if (node != null && node.id != undefined) {
+            //is folder
+            if (blacklist.indexOf(node.title) == -1) {
+                node.children.forEach(e => {
+                    searchrecurse(e, term);
+                });
+            }
+        }
+
+    }
 
 
-drawBMResult = (obj, bmcontainerdiv) => {
-        var bmdiv = document.createElement("li");
-        bmdiv.className = 'tile linktobm' + obj.id;
+    drawBMResult = (obj, bmcontainerdiv) => {
+            var bmdiv = document.createElement("li");
+            bmdiv.className = 'tile linktobm' + obj.id;
 
-        var titlespan = document.createElement('span');
-        titlespan.innerHTML += obj.title;
+            var titlespan = document.createElement('span');
+            titlespan.innerHTML += obj.title;
 
-        let img = document.createElement("img");
+            let img = document.createElement("img");
 
-        img.onload =
-            function() {
-                if ('naturalHeight' in this) {
-                    if (this.naturalHeight + this.naturalWidth === 0) {
+            img.onload =
+                function() {
+                    if ('naturalHeight' in this) {
+                        if (this.naturalHeight + this.naturalWidth === 0) {
+                            this.onerror();
+                            return;
+                        }
+                    } else if (this.width + this.height == 0) {
                         this.onerror();
                         return;
                     }
-                } else if (this.width + this.height == 0) {
-                    this.onerror();
-                    return;
-                }
-            };
-        img.src = faviconurl(obj.url);
-        // img.src= getFaviconForPageURL(obj.url,false);
+                };
+            img.src = faviconurl(obj.url);
+            // img.src= getFaviconForPageURL(obj.url,false);
 
 
-        //img.src=getBaseUrl(obj.url) + '/favicon.ico';
-        img.onerror = function() {
-            iconerrors[sanitizeUrl(this.currentSrc.substring(0, this.currentSrc.indexOf('.')))] = '.png';
+            //img.src=getBaseUrl(obj.url) + '/favicon.ico';
+            img.onerror = function() {
+                iconerrors[sanitizeUrl(this.currentSrc.substring(0, this.currentSrc.indexOf('.')))] = '.png';
 
-            img.src = onerrorsrc;
+                img.src = onerrorsrc;
+            }
+            img.className = 'icon';
+
+            let a = document.createElement("a");
+            a.href = obj.url;
+
+            a.appendChild(img);
+            a.appendChild(titlespan); //write name
+            bmdiv.appendChild(a);
+            bmcontainerdiv.appendChild(bmdiv);
         }
-        img.className = 'icon';
-
-        let a = document.createElement("a");
-        a.href = obj.url;
-
-        a.appendChild(img);
-        a.appendChild(titlespan); //write name
-        bmdiv.appendChild(a);
-        bmcontainerdiv.appendChild(bmdiv);
-    }
-    //#endregion
-let searchinput = createElement('input', "searchinput", '', searchdiv);
-let searchbutton = createElement('button', "searchbutton", '', searchdiv);
-searchbutton.innerHTML = 'search';
-searchbutton.onclick = search;
-let resultlist = createElement('ul', "resultlist", '', searchdiv);
+        //#endregion 
+    let searchbar = createElement('div', '', '', searchdiv);
+    let searchinput = createElement('input', "searchinput", '', searchbar);
+    let searchbutton = createElement('button', "searchbutton", '', searchbar);
+    let searchicon = createElement('img', '', '', searchbutton);
+    searchicon.src = relpath + "materialIcons/search.png"
+    searchbutton.onclick = search;
+    searchinput.onkeypress = clickPress;
+    let clearbutton = createElement('button', "clearbutton", '', searchbar);
+    let clearicon = createElement('img', "icon", '', clearbutton);
+    clearicon.src = relpath + "materialIcons/close.png"
+    clearbutton.onclick = clear;
+    let resultlist = createElement('ul', "resultlist", '', searchdiv);
+}
