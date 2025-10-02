@@ -17,230 +17,245 @@ a,
 a:hover,
 a:visited,
 a:active {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 body {
-    background-color: #48bf91;
-    overflow-y: scroll;
-    font-size: 100%;
-    /* Add the ability to scroll */
+  background-color: #48bf91;
+  overflow-y: scroll;
+  font-size: 100%;
+  /* Add the ability to scroll */
 }
-
 
 /* Hide scrollbar for chrome, Safari and Opera */
 
 body::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
-.imgtile>img {
-    position: relative;
-    top: 7px;
-    left: 7px;
-    width: 27px;
+.imgtile > img {
+  position: relative;
+  top: 7px;
+  left: 7px;
+  width: 27px;
 }
 
 #bm {
-    font-size: 100%;
-    font-family: Fira Code;
-    position: absolute;
-    width: 55%;
-    left: 10%;
-    top: 10%;
+  font-size: 100%;
+  font-family: Fira Code;
+  position: absolute;
+  width: 55%;
+  left: 10%;
+  top: 10%;
 }
 
 #ullist {
-    font-size: 150%;
-    font-family: Fira Code;
-    position: absolute;
-    left: 66%;
-    top: 35%;
+  font-size: 150%;
+  font-family: Fira Code;
+  position: absolute;
+  left: 66%;
+  top: 35%;
 }
 
 #bmlist {
-    font-size: 150%;
-    font-family: Fira Code;
-    position: absolute;
-    left: 20%;
-    top: 30%;
+  font-size: 150%;
+  font-family: Fira Code;
+  position: absolute;
+  left: 20%;
+  top: 30%;
 }
 
 #search {
-    left: 10%;
-    top: 2.5%;
-    font-size: 150%;
-    font-family: Fira Code;
-    position: absolute;
+  left: 10%;
+  top: 2.5%;
+  font-size: 150%;
+  font-family: Fira Code;
+  position: absolute;
 }
 
 ul li {
-    margin: 5px 5px;
+  margin: 5px 5px;
 }
 
 .imgtile {
-    border-radius: 15px;
-    width: 40px;
-    height: 40px;
-    display: inline-block;
-    background-color: black;
+  border-radius: 15px;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  background-color: black;
 }
 
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 .tile {
-    margin: 2px;
-    width: 100%;
-    display: flow-root;
-    height: 40px;
+  margin: 2px;
+  width: 100%;
+  display: flow-root;
+  height: 40px;
 }
 
-.tile>.delicon {
-    vertical-align: middle;
-    float: right;
-    width: 30px;
-    transition: transform 0.2s;
+.tile > .delicon {
+  vertical-align: middle;
+  float: right;
+  width: 30px;
+  transition: transform 0.2s;
 }
 
-.tile>.delicon:hover {
-    transform: scale(1.2) rotate(20deg);
+.tile > .delicon:hover {
+  transform: scale(1.2) rotate(20deg);
 }
 
-.tile>a:hover>.icon {
-    transform: scale(1.2) rotate(20deg);
+.tile > a:hover > .icon {
+  transform: scale(1.2) rotate(20deg);
 }
 
-.tile>a>span {
-    vertical-align: middle;
-    display: inline-block;
-    width: 85%;
-    font-size: 90%;
-    overflow: hidden;
-    white-space: nowrap;
+.tile > a > span {
+  vertical-align: middle;
+  display: inline-block;
+  width: 85%;
+  font-size: 90%;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-.tile>a:hover>span {
-    font-size: 100%;
+.tile > a:hover > span {
+  font-size: 100%;
 }
 
-.tile>a>.icon {
-    vertical-align: middle;
-    margin-right: 10px;
-    position: relative;
-    width: 25px;
-    transition: width 0.2s;
+.tile > a > .icon {
+  vertical-align: middle;
+  margin-right: 10px;
+  position: relative;
+  width: 25px;
+  transition: width 0.2s;
 }
 
 .thumbnailcontainer {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .thumbnail {
-    left: 30px;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #036952;
-    color: rgba(245, 245, 245, 0.616);
-    border-radius: 10px;
-    width: 7.5em;
-    height: 7.5em;
+  left: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #036952;
+  color: rgba(245, 245, 245, 0.616);
+  border-radius: 10px;
+  width: 7.5em;
+  height: 7.5em;
 }
 
 .thumbnail.active {
-    background-color: #004b3a;
-    border-radius: 10px;
+  background-color: #004b3a;
+  border-radius: 10px;
 }
 
-.contentcontainer>.line {
-    position: relative;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 10px;
-    background-color: rgba(245, 245, 245, 0.616);
-    height: 0px;
-    width: 0%;
-    transition: width 0.5s ease-in, height 0s 0.5s;
+.contentcontainer > .line {
+  position: relative;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  background-color: rgba(245, 245, 245, 0.616);
+  height: 0px;
+  width: 0%;
+  transition: width 0.5s ease-in, height 0s 0.5s;
 }
 
-.contentcontainer.active>.line {
-    height: 7px;
-    width: 100%;
-    transition: width 0.5s ease-out 0s, height 0s;
+.hide-visually {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
 }
 
+.contentcontainer.active > .line {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 7px;
+  width: 100%;
+  transition: width 0.5s ease-out 0s, height 0s;
+}
 
 /*
 transition: background-color 1s linear 2s, color 1s;
 transition: property name | duration | timing function | delay
 */
 
-.contentcontainer>.content {
-    max-height: 0px;
-    visibility: hidden;
-    opacity: 0;
-    transition: max-height 0.5s, visibility 0s 0.5s, opacity 0.5s;
+.contentcontainer > .content {
+  max-height: 0px;
+  visibility: hidden;
+  opacity: 0;
+  transition: max-height 0.5s, visibility 0s 0.5s, opacity 0.5s;
 }
 
-.contentcontainer.active>.content {
-    visibility: inherit;
-    max-height: 100000px;
-    opacity: 1;
-    transition: max-height 0.5s, visibility 0s, opacity 0.5s;
+.contentcontainer.active > .content {
+  visibility: inherit;
+  max-height: 100000px;
+  opacity: 1;
+  transition: max-height 0.5s, visibility 0s, opacity 0.5s;
 }
 
 #searchinput {
-    padding: 5px;
-    color: none;
-    text-decoration: none;
-    background-color: rgba(245, 245, 245, 0.616);
-    border: 2px solid rgb(70, 70, 70);
-    border-radius: 15px;
-    font-size: large;
+  padding: 5px;
+  color: none;
+  text-decoration: none;
+  background-color: rgba(245, 245, 245, 0.616);
+  border: 2px solid rgb(70, 70, 70);
+  border-radius: 15px;
+  font-size: large;
 }
 
-#search>ul {
-    padding-inline-start: 5px;
-    background-color: honeydew;
-    border-radius: 15px;
-    width: 80vw;
+#search > ul {
+  padding-inline-start: 5px;
+  background-color: honeydew;
+  border-radius: 15px;
+  width: 80vw;
 }
 
-#search>div>button>svg {
-    height: 100%;
+#search > div > button > svg {
+  height: 100%;
 }
 
-#search>div {
-    height: 1.5em;
-    display: inline-flex;
+#search > div {
+  height: 1.5em;
+  display: inline-flex;
 }
 
-#search>div>button {
-    margin-left: 2px;
-    padding: 5px;
-    color: none;
-    text-align: center;
-    text-decoration: none;
-    background-color: rgba(245, 245, 245, 0.616);
-    border: 2px solid rgb(70, 70, 70);
-    border-radius: 15px;
+#search > div > button {
+  margin-left: 2px;
+  padding: 5px;
+  color: none;
+  text-align: center;
+  text-decoration: none;
+  background-color: rgba(245, 245, 245, 0.616);
+  border: 2px solid rgb(70, 70, 70);
+  border-radius: 15px;
 }
 
-#search>div>button:hover {
-    background-color: rgba(185, 185, 185, 0.616);
+#search > div > button:hover {
+  background-color: rgba(185, 185, 185, 0.616);
 }
 
-#search>div>button:active {
-    background-color: rgba(160, 160, 160, 0.616);
+#search > div > button:active {
+  background-color: rgba(160, 160, 160, 0.616);
 }
-.defaultFavImage{
-    filter: brightness(0);
+.defaultFavImage {
+  filter: brightness(0);
+}
+
+#resultlist {
+  margin-top: 5px;
 }

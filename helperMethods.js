@@ -40,7 +40,7 @@ function getFolderContentId(id) {
 }
 
 function getDisplayFolderContentId(id) {
-  return "inDisplayFolder-" + id;
+  return "inside-" + id;
 }
 
 function getLinkToBookmarkClass(id){

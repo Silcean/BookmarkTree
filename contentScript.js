@@ -250,7 +250,7 @@ function drawFolder(obj, superthumbnaildiv, superdisplaydiv, depth) {
   //displaycontainer. holds the actual content the thumbnails link to
   let displaydiv = CreateDivWithClass(
     "displaycontainer",
-    obj.id + "displaycontainer"
+    "displaycontainer-" + obj.id
   );
   //extra div for all the bookmarks
   //cause css cannot handle it elsewise
