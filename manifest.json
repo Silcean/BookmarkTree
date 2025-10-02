@@ -1,46 +1,13 @@
 {
-    "name": "Visual Bookmark Tree",
-    "description": "Adds a grafical gui to bookmarks in the newtab window",
-    "version": "1.0",
-    "manifest_version": 3,
-
-    "permissions": [
-        "tabs",
-        "bookmarks",
-        "activeTab",
-        "storage"
-    ],
-    "options_ui": {
-        "page": "popup.html",
-        "open_in_tab": false
-    },
-    "background": {
-        "service_worker": "background.js"
-    },
-    "content_scripts": [{
-        "matches": [
-            "file:///*newtab.html"
-        ],
-        "js": [
-            "contentScript.js"
-        ]
-    }],
-    "web_accessible_resources": [{
-        "resources": [
-            "icons/*",
-            "css/*",
-            "chrome://favicon2/*",
-            "brave://favicon2/*",
-            "chrome://*",
-            "brave://*"
-        ],
-        "matches": [
-            "file:///*"
-        ],
-        "use_dynamic_url": true
-    }],
-    "action": {
-        "default_title": "Settings",
-        "default_popup": "popup.html"
-    }
+  "name": "Visual Bookmark Tree",
+  "description": "Adds a grafical gui to bookmarks in the newtab window",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": ["bookmarks", "activeTab", "favicon", "storage"],
+  "chrome_url_overrides": {
+    "newtab": "/newtab.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
 }

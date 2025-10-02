@@ -24,6 +24,7 @@ a:active {
 body {
     background-color: #48bf91;
     overflow-y: scroll;
+    font-size: 100%;
     /* Add the ability to scroll */
 }
 
@@ -213,7 +214,7 @@ transition: property name | duration | timing function | delay
     width: 80vw;
 }
 
-#search>div>button>img {
+#search>div>button>svg {
     height: 100%;
 }
 
@@ -239,4 +240,7 @@ transition: property name | duration | timing function | delay
 
 #search>div>button:active {
     background-color: rgba(160, 160, 160, 0.616);
+}
+.defaultFavImage{
+    filter: brightness(0);
 }
