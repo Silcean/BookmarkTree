@@ -37,7 +37,7 @@ function drawTrashCanIcon(id) {
   let imgtrash = document.createElement("img");
   imgtrash.src = trashIcon();
   imgtrash.id = "remove" + id;
-  imgtrash.className = "delicon";
+  imgtrash.className = "line-hover-icon";
   return imgtrash;
 }
 
@@ -59,7 +59,7 @@ function drawBookmarkIcon(url) {
   };
 
   img.src = getFaviconUrl(url);
-  img.className = "icon";
+  img.className = "bookmark-line-element-favicon";
   return img;
 }
 

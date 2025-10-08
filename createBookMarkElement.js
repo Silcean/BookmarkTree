@@ -2,7 +2,7 @@ drawBookMarkLink = (containerType, obj, depth, shouldDrawTrashCan) => {
   if (!obj) return;
   var container = CreateElementWithClass(
     containerType,
-    "tile " + getLinkToBookmarkClass(obj.id) + " " + getDepthClass(depth)
+    "bookmark-line-element " + getLinkToBookmarkClass(obj.id) + " " + getDepthClass(depth)
   );
 
   var titlespan = document.createElement("span");

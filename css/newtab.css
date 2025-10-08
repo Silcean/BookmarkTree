@@ -13,6 +13,14 @@ transition: property name | duration | timing function | delay
 https://stackoverflow.com/questions/42817011/how-can-i-reverse-a-delayed-animation
 */
 
+:root {
+  --bg-color: #48bf91;
+  --folder-color: #036952;
+  --folder-open-color: #004b3a;
+  --folder-text-color: rgba(245, 245, 245, 0.616);
+  --divider-line-color: rgba(245, 245, 245, 0.616);
+}
+
 a,
 a:hover,
 a:visited,
@@ -22,9 +30,10 @@ a:active {
 }
 
 body {
-  background-color: #48bf91;
+  background-color: var(--bg-color);
   overflow-y: scroll;
   font-size: 100%;
+  font-family: Fira Code;
   /* Add the ability to scroll */
 }
 
@@ -33,7 +42,10 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
-
+.large-text {
+  font-size: 150%;
+  font-family: Fira Code;
+}
 .imgtile > img {
   position: relative;
   top: 7px;
@@ -42,28 +54,16 @@ body::-webkit-scrollbar {
 }
 
 #bm {
-  font-size: 100%;
-  font-family: Fira Code;
   position: absolute;
   width: 55%;
   left: 10%;
   top: 10%;
 }
 
-#ullist {
-  font-size: 150%;
-  font-family: Fira Code;
+#favoritesListContainer {
   position: absolute;
   left: 66%;
   top: 35%;
-}
-
-#bmlist {
-  font-size: 150%;
-  font-family: Fira Code;
-  position: absolute;
-  left: 20%;
-  top: 30%;
 }
 
 #search {
@@ -77,6 +77,9 @@ body::-webkit-scrollbar {
 ul li {
   margin: 5px 5px;
 }
+ul {
+  list-style-type: none;
+}
 
 .imgtile {
   border-radius: 15px;
@@ -86,33 +89,14 @@ ul li {
   background-color: black;
 }
 
-ul {
-  list-style-type: none;
-}
-
-.tile {
+.bookmark-line-element {
   margin: 2px;
   width: 100%;
   display: flow-root;
   height: 40px;
 }
 
-.tile > .delicon {
-  vertical-align: middle;
-  float: right;
-  width: 30px;
-  transition: transform 0.2s;
-}
-
-.tile > .delicon:hover {
-  transform: scale(1.2) rotate(20deg);
-}
-
-.tile > a:hover > .icon {
-  transform: scale(1.2) rotate(20deg);
-}
-
-.tile > a > span {
+.bookmark-line-element > a > span {
   vertical-align: middle;
   display: inline-block;
   width: 85%;
@@ -121,17 +105,33 @@ ul {
   white-space: nowrap;
 }
 
-.tile > a:hover > span {
+.bookmark-line-element > a:hover > span {
   font-size: 100%;
 }
 
-.tile > a > .icon {
+.bookmark-line-element > a > .bookmark-line-element-favicon {
   vertical-align: middle;
   margin-right: 10px;
   position: relative;
   width: 25px;
   transition: width 0.2s;
 }
+
+.bookmark-line-element > a:hover > .bookmark-line-element-favicon {
+  transform: scale(1.2) rotate(20deg);
+}
+
+.line-hover-icon {
+  vertical-align: middle;
+  float: right;
+  width: 30px;
+  transition: transform 0.2s;
+}
+
+.line-hover-icon:hover{
+  transform: scale(1.2) rotate(20deg);
+}
+
 
 .thumbnailcontainer {
   display: flex;
@@ -145,15 +145,15 @@ ul {
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 10px;
-  background-color: #036952;
-  color: rgba(245, 245, 245, 0.616);
+  background-color: var(--folder-color);
+  color: var(--folder-text-color);
   border-radius: 10px;
   width: 7.5em;
   height: 7.5em;
 }
 
 .thumbnail.active {
-  background-color: #004b3a;
+  background-color: var(--folder-open-color);
   border-radius: 10px;
 }
 
@@ -164,21 +164,10 @@ ul {
   margin-left: auto;
   margin-right: auto;
   border-radius: 10px;
-  background-color: rgba(245, 245, 245, 0.616);
+  background-color: var(--divider-line-color);
   height: 0px;
   width: 0%;
   transition: width 0.5s ease-in, height 0s 0.5s;
-}
-
-.hide-visually {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  width: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
 }
 
 .contentcontainer.active > .line {
@@ -207,7 +196,9 @@ transition: property name | duration | timing function | delay
   opacity: 1;
   transition: max-height 0.5s, visibility 0s, opacity 0.5s;
 }
-
+/*
+Search css
+*/
 #searchinput {
   padding: 5px;
   color: none;
@@ -218,11 +209,13 @@ transition: property name | duration | timing function | delay
   font-size: large;
 }
 
-#search > ul {
+#searchResultList {
   padding-inline-start: 5px;
   background-color: honeydew;
   border-radius: 15px;
   width: 80vw;
+  margin-top: 5px;
+
 }
 
 #search > div > button > svg {
@@ -234,7 +227,7 @@ transition: property name | duration | timing function | delay
   display: inline-flex;
 }
 
-#search > div > button {
+.searchbutton {
   margin-left: 2px;
   padding: 5px;
   color: none;
@@ -244,18 +237,13 @@ transition: property name | duration | timing function | delay
   border: 2px solid rgb(70, 70, 70);
   border-radius: 15px;
 }
-
-#search > div > button:hover {
+.searchbutton:hover {
   background-color: rgba(185, 185, 185, 0.616);
 }
-
-#search > div > button:active {
+.searchbutton:active {
   background-color: rgba(160, 160, 160, 0.616);
 }
+
 .defaultFavImage {
   filter: brightness(0);
-}
-
-#resultlist {
-  margin-top: 5px;
 }

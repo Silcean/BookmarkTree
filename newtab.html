@@ -12,13 +12,13 @@
   <title>New Tab</title>
   <body>
     <div id="bm"></div>
-    <div id="ullist">
-      <ul id="list"></ul>
+    <div id="favoritesListContainer" class="large-text">
+      <ul id="favoritesList"></ul>
     </div>
-    <div id="search">
+    <div id="search" class="large-text">
       <div>
         <input id="searchinput" />
-        <button id="searchbutton">
+        <button id="search-execute-button" class="searchbutton">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 -960 960 960"
@@ -29,7 +29,7 @@
             />
           </svg>
         </button>
-        <button id="clearbutton">
+        <button id="clearbutton" class="searchbutton">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 -960 960 960"
@@ -41,7 +41,7 @@
           </svg>
         </button>
       </div>
-      <ul id="resultlist"></ul>
+      <ul id="searchResultList"></ul>
     </div>
   </body>
 </html>

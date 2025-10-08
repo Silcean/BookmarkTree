@@ -15,7 +15,7 @@ function initSearch() {
     }
   };
   clear = () => {
-    resultlist.innerHTML = "";
+    searchResultList.innerHTML = "";
   };
 
   onEnter = (event) => {
@@ -28,14 +28,14 @@ function initSearch() {
   //#endregion
   document.getElementById("searchinput").onkeydown = onEnter;
   document.getElementById("clearbutton").onclick = clear;
-  document.getElementById("searchbutton").onclick = executeSearch;
+  document.getElementById("search-execute-button").onclick = executeSearch;
 }
 async function searchrecurse(node, term) {
   if (node != null && node.url != undefined) {
     // is bookmark
     //todo rate accuracy of result for sorting
     if (node.title.toLowerCase().includes(term.toLowerCase())) {
-      resultlist.appendChild(drawBookMarkLink("li", node, 0, false));
+      searchResultList.appendChild(drawBookMarkLink("li", node, 0, false));
     }
   } else if (node != null && node.id != undefined) {
     //is folder

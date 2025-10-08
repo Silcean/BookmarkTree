@@ -278,7 +278,7 @@ function drawTrashCan(id) {
 
 function drawFavorites(test) {
   var sites = test.children;
-  let list = document.getElementById("list");
+  let list = document.getElementById("favoritesList");
   for (let i = 0; i < sites.length; i++) {
     list.innerHTML +=
       "<li>" +
