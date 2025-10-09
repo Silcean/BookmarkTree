@@ -5,6 +5,13 @@ let defaultOptios = {
   skipFolders: ["Mozilla Firefox"],
   favoriteFolderIdentifier: "Favorites",
   preactivatedList: ["Bookmarks", "Kategorie"],
+  colors:{
+    background:"#48bf91",
+    folderBackground:"#036952",
+    folderBackgroundActivated:"#004b3a",
+    folderTextColor:"#97b4ad",
+    textColor:"black",
+  }
 };
 
 let relpath = chrome.runtime.getURL("/");
@@ -69,6 +76,7 @@ function init() {
     } else {
       consumeOptionsUpdate(obj["bookmark-tree-settings"]);
     }
+    initSettings(localOptions["bookmark-tree-settings"])
     drawTree();
     return obj;
   });
@@ -87,6 +95,7 @@ function consumeOptionsUpdate(newOptions) {
   globalBookmarkTreeOptions = newOptions;
   console.log("apply loaded options", newOptions);
   setSearchEnabled(newOptions.enableSearch);
+  applyColorsToCss(newOptions)
 }
 
 function setOptions(newOptions) {

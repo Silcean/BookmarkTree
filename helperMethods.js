@@ -1,3 +1,5 @@
+const settingsElementVariable = "--display-setting-element";
+
 function CreateDivWithClass(classname, id) {
   const div = document.createElement("div");
   div.className = classname;
@@ -7,7 +9,7 @@ function CreateDivWithClass(classname, id) {
 
 function CreateElementWithClass(elementName, classname, id) {
   const div = document.createElement(elementName);
-  div.className = classname;
+  if (classname) div.className = classname;
   if (id) div.id = id;
   return div;
 }
@@ -43,6 +45,17 @@ function getDisplayFolderContentId(id) {
   return "inside-" + id;
 }
 
-function getLinkToBookmarkClass(id){
-    return "link-to-bm-" + id
+function getLinkToBookmarkClass(id) {
+  return "link-to-bm-" + id;
+}
+
+function setRootCssVariable(variable, value) {
+  document.documentElement.style.setProperty(variable,value);
+}
+
+function setSettingsVariable(value) {
+  document.documentElement.setAttribute(
+    "style",
+    `${settingsElementVariable}: ${value}`
+  );
 }
