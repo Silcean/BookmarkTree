@@ -1,6 +1,9 @@
 var tree;
 var tabsWaitingForTree = [];
-
+console.log("WORKER: init backgroundscript")
+chrome.runtime.onStartup.addListener( () => {
+    console.log(`onStartup()`);
+});
 //respondes to request for the bookmark tree from tabs
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log(

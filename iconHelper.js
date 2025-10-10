@@ -63,7 +63,7 @@ function drawBookmarkIcon(url) {
   return img;
 }
 
-function trashIcon() { 
+function trashIcon() {
   // <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
   //   <polyline points="3 6 5 6 21 6"></polyline>
   //   <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -72,4 +72,26 @@ function trashIcon() {
   // </svg>
 
   return "data:image/svg+xml;base64,IDxzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB3aWR0aD0nNTInIGhlaWdodD0nNTInIHZpZXdCb3g9JzAgMCAyNCAyNCcgZmlsbD0nbm9uZScgc3Ryb2tlPSdjdXJyZW50Q29sb3InIHN0cm9rZS13aWR0aD0nMS41JyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnIGNsYXNzPSdmZWF0aGVyIGZlYXRoZXItdHJhc2gtMic+PHBvbHlsaW5lIHBvaW50cz0nMyA2IDUgNiAyMSA2Jz48L3BvbHlsaW5lPjxwYXRoIGQ9J00xOSA2djE0YTIgMiAwIDAgMS0yIDJIN2EyIDIgMCAwIDEtMi0yVjZtMyAwVjRhMiAyIDAgMCAxIDItMmg0YTIgMiAwIDAgMSAyIDJ2Mic+PC9wYXRoPjxsaW5lIHgxPScxMCcgeTE9JzExJyB4Mj0nMTAnIHkyPScxNyc+PC9saW5lPjxsaW5lIHgxPScxNCcgeTE9JzExJyB4Mj0nMTQnIHkyPScxNyc+PC9saW5lPjwvc3ZnPg==";
+}
+
+function resetIcon() {
+  return `<svg class="buttonIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"  ><path d="M280-200v-80h284q63 0 109.5-40T720-420q0-60-46.5-100T564-560H312l104 104-56 56-200-200 200-200 56 56-104 104h252q97 0 166.5 63T800-420q0 94-69.5 157T564-200H280Z"/></svg>`;
+}
+function closeIcon() {
+  return `<svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 -960 960 960"
+            fill="#00000"
+          >
+            <path
+              d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+            />
+          </svg>`;
+}
+function colorIcon() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M346-140 100-386q-10-10-15-22t-5-25q0-13 5-25t15-22l230-229-106-106 62-65 400 400q10 10 14.5 22t4.5 25q0 13-4.5 25T686-386L440-140q-10 10-22 15t-25 5q-13 0-25-5t-22-15Zm47-506L179-432h428L393-646Zm399 526q-36 0-61-25.5T706-208q0-27 13.5-51t30.5-47l42-54 44 54q16 23 30 47t14 51q0 37-26 62.5T792-120Z"/></svg>`;
+}
+
+function addIcon() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" ><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>`;
 }

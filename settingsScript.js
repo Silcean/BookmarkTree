@@ -20,11 +20,25 @@ function initSettings(options) {
   colorbuttons.appendChildren([createApplyButton(), createResetButton()]);
   colorbuttons.style = "display: flex;";
   list.appendChildren([
-    ...colorSettings(options),
-    createTextInput("Favorite Folder Identifier", "favorites"),
-    createChips(),
+    SettingsHeadline("Colors:"),
+    wrapInInset(colorSettings(options)),
+    SettingsHeadline("Favorites:"),
+    wrapInInset(createTextInput("Favorite Folder Identifier", "favorites")),
+    SettingsHeadline("Remove Folder from Tree:"),
+
+    wrapInInset(createChips()),
   ]);
 }
+function wrapInInset(elements) {
+  const wrapper = CreateDivWithClass("inset-settings");
+  if (elements.length != undefined) {
+    wrapper.appendChildren(elements);
+  } else {
+    wrapper.appendChild(elements);
+  }
+  return wrapper;
+}
+
 function colorSettings(options) {
   const colorbuttons = CreateElementWithClass("li");
   colorbuttons.appendChildren([createApplyButton(), createResetButton()]);
@@ -120,7 +134,7 @@ function createResetButton() {
     "button",
     "resetbutton searchbutton optionsbutton"
   );
-  resetButton.innerHTML = `<span>Reset Colors</span><svg class="buttonIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"  ><path d="M280-200v-80h284q63 0 109.5-40T720-420q0-60-46.5-100T564-560H312l104 104-56 56-200-200 200-200 56 56-104 104h252q97 0 166.5 63T800-420q0 94-69.5 157T564-200H280Z"/></svg>`;
+  resetButton.innerHTML = `<span>Reset Colors</span>` + resetIcon();
   resetButton.onclick = () => {
     applyColorsToCss(globalBookmarkTreeOptions);
     applyColorsToInputs(globalBookmarkTreeOptions);
@@ -134,7 +148,7 @@ function createApplyButton() {
     "button",
     "resetbutton searchbutton optionsbutton"
   );
-  applyButton.innerHTML = `<span>Apply Colors</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M346-140 100-386q-10-10-15-22t-5-25q0-13 5-25t15-22l230-229-106-106 62-65 400 400q10 10 14.5 22t4.5 25q0 13-4.5 25T686-386L440-140q-10 10-22 15t-25 5q-13 0-25-5t-22-15Zm47-506L179-432h428L393-646Zm399 526q-36 0-61-25.5T706-208q0-27 13.5-51t30.5-47l42-54 44 54q16 23 30 47t14 51q0 37-26 62.5T792-120Z"/></svg>`;
+  applyButton.innerHTML = `<span>Apply Colors</span>` + colorIcon();
 
   applyButton.onclick = () => {
     let colors = getColorsFromInputs();
@@ -210,3 +224,11 @@ function createTextInput(title, placeholder) {
 }
 
 //TODO add multistring input maybe like chips?
+
+function SettingsHeadline(text) {
+  const headline = CreateElementWithClass("h2", "settings-section");
+  headline.innerHTML = text;
+  const link = CreateElementWithClass("li");
+  link.appendChildren([headline]);
+  return link;
+}

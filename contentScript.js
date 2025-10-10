@@ -1,4 +1,5 @@
 /* #region Initial Variables */
+console.log("init contentscript")
 let globalBookmarkTreeOptions = {};
 let defaultOptios = {
   enableSearch: true,
