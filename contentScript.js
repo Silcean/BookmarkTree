@@ -69,15 +69,14 @@ function init() {
   console.log("Initialising application");
   initSearch();
   chrome.storage.sync.get("bookmark-tree-settings", function (obj) {
-    localOptions = obj;
+    localOptions;
     if (!obj || Object.keys(obj).length === 0) {
       localOptions = defaultOptios;
-      setOptions(localOptions);
-      console.log("initialised options object in sync storage", localOptions);
     } else {
-      consumeOptionsUpdate(obj["bookmark-tree-settings"]);
+      localOptions = obj["bookmark-tree-settings"];
     }
-    initSettings(localOptions["bookmark-tree-settings"])
+    consumeOptionsUpdate(localOptions);
+    initSettings(localOptions)
     drawTree();
     return obj;
   });

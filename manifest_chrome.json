@@ -1,0 +1,13 @@
+{
+  "name": "Visual Bookmark Tree",
+  "description": "Adds a grafical gui to bookmarks in the newtab window",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": ["bookmarks", "activeTab", "favicon", "storage"],
+  "chrome_url_overrides": {
+    "newtab": "/newtab.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

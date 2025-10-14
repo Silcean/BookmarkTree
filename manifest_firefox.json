@@ -1,37 +1,22 @@
 {
-  "name": "Visual Bookmark Tree UNTESTED manifest",
+  "name": "Visual Bookmark Tree manifest",
   "description": "Adds a graphical GUI to bookmarks in the new tab window",
   "version": "1.0",
-  "manifest_version": 2, 
+  "manifest_version": 2,
   "permissions": [
-    "tabs",
     "bookmarks",
     "activeTab",
-    "storage",
-    "favicon"
+    "storage"
   ],
-  "options_ui": {
-    "page": "popup.html",
-    "open_in_tab": false
-  },
-  "chrome_url_overrides": {
-    "newtab": "newtab.html" 
-  },
+    "chrome_url_overrides": {
+        "newtab": "/newtab.html"
+    },
+    "chrome_settings_overrides": {
+        "homepage": "/newtab.html"
+    },
   "background": {
-    "scripts": ["background.js"]
-  },
-  "browser_action": {
-    "default_title": "Settings",
-    "default_popup": "popup.html"
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "chrome://newtab/", 
-        "chrome://new-tab-page/*"
-      ],
-      "js": ["contentScript.js"],
-      "run_at": "document_end"
-    }
-  ]
+    "scripts": [
+      "background.js"
+    ]
+  }
 }

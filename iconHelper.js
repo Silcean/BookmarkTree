@@ -18,8 +18,8 @@ function getFavIconFirefox(urlString) {
 }
 
 function getFaviconUrl(url) {
-  // return getFavIconFirefox(url);
-  return getFaviconChromeExtensionAPI(url);
+  return getFavIconFirefox(url);
+  // return getFaviconChromeExtensionAPI(url);
 }
 
 function isDefaultChromeImage(img) {

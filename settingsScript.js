@@ -9,6 +9,7 @@ function toggleSettings() {
 }
 
 function initSettings(options) {
+  console.log("intialising settings with options: ",options)
   settingsButton = document.getElementById("settings-toggle-button");
   onClick = (event) => {
     toggleSettings();
