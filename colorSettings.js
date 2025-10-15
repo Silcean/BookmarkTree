@@ -1,7 +1,18 @@
-function colorSettings(options) {
+
+function colorSettingsWrapped(options) {
   const colorbuttons = CreateElementWithClass("li");
   colorbuttons.appendChildren([createColorSettingsApplyButton(), createColorSettingsResetButton()]);
   colorbuttons.style = "display: flex;";
+  const wrappedColor = wrapInInset(colorSettings(options));
+  wrappedColor.style = "max-width:17em;";
+  return wrappedColor
+}
+
+
+function colorSettings(options) {
+  const colorbuttons = CreateElementWithClass("li");
+  colorbuttons.appendChildren([createColorSettingsApplyButton(), createColorSettingsResetButton()]);
+  colorbuttons.style = "display: flex; margin: 0px;";
   return [
     addColorPicker(
       "Background Color: ",
@@ -31,6 +42,7 @@ function colorSettings(options) {
     colorbuttons,
   ];
 }
+
 function watchColorPicker() {
   applyColorsToCss({
     colors: getColorsFromInputs(),
@@ -80,12 +92,13 @@ function createColorPicker(id, type, options) {
 }
 
 function createColorSettingsResetButton() {
-  //TODO make button do something
   const resetButton = CreateElementWithClass(
     "button",
     "resetbutton searchbutton optionsbutton"
   );
   resetButton.innerHTML = `<span>Reset Colors</span>` + resetIcon();
+  resetButton.style = "flex-grow: 1;";
+
   resetButton.onclick = () => {
     applyColorsToCss(globalBookmarkTreeOptions);
     applyColorsToInputs(globalBookmarkTreeOptions);
@@ -94,13 +107,12 @@ function createColorSettingsResetButton() {
 }
 
 function createColorSettingsApplyButton() {
-  //TODO make button do something
   const applyButton = CreateElementWithClass(
     "button",
     "resetbutton searchbutton optionsbutton"
   );
   applyButton.innerHTML = `<span>Apply Colors</span>` + colorIcon();
-
+  applyButton.style = "flex-grow: 1;";
   applyButton.onclick = () => {
     let colors = getColorsFromInputs();
     applyColorsToCss(colors);

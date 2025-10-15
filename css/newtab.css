@@ -205,9 +205,11 @@ Search css
 
 .overlay-container {
   padding-inline-start: 5px;
+  padding-right: 10px;
   background-color: var(--overlay-container-color);
   border-radius: 15px;
   margin-top: 5px;
+  margin-bottom: 5px;
 }
 #search {
   width: 55%;
@@ -267,7 +269,6 @@ Settings css
 }
 
 .buttonDefaultStyleOverwrite {
-  width: 24px;
   border: none;
   background-color: unset;
   text-align: center;
@@ -360,7 +361,7 @@ Settings css
 /*
 chips
 */
-#current-chips-container {
+.current-chips-container {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -380,7 +381,7 @@ chips
   white-space: nowrap;
 }
 
-.chip-button {
+.text-input-apply-button {
   padding: 1px;
   margin: 2px;
   width: 20px;
@@ -406,8 +407,9 @@ chips
   color: unset;
 }
 
-.add-chips-container {
-  margin: 5px;
+.input-field-container {
+  margin-top: 5px;
+  margin-bottom: 10px;
   display: flex;
   align-content: center;
   width: fit-content;
@@ -417,11 +419,15 @@ chips
   padding: 5px;
 }
 
-.settings-section{
+.settings-section {
   padding-top: 10px;
   margin-bottom: 0px;
 }
 
-.inset-settings{
+.inset-settings {
   margin-left: 1em;
+}
+
+.spacer{
+  height: 1em;
 }

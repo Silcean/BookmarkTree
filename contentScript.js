@@ -95,7 +95,7 @@ function consumeOptionsUpdate(newOptions) {
   globalBookmarkTreeOptions = newOptions;
   console.log("apply loaded options", newOptions);
   setSearchEnabled(newOptions.enableSearch);
-  writeSkipFoldersToSettings(newOptions.skipFolders)
+  // writeSkipFoldersToSettings(newOptions.skipFolders)
   applyColorsToCss(newOptions)
 }
 

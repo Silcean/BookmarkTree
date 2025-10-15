@@ -1,4 +1,5 @@
 let settingsOpenState = false;
+let thoseChipsLikeTheFolderSkipList;
 function toggleSettings() {
   if (settingsOpenState) {
     closeSettings();
@@ -9,36 +10,46 @@ function toggleSettings() {
 }
 
 function initSettings(options) {
-  console.log("intialising settings with options: ",options)
+  console.log("intialising settings with options: ", options);
   settingsButton = document.getElementById("settings-toggle-button");
   onClick = (event) => {
     toggleSettings();
   };
   settingsButton.onclick = onClick;
-
   const list = document.getElementById("settings-list");
+  const inputLabel = CreateElementWithClass("span");
+  inputLabel.innerHTML =
+    "Favorite bookmarks allow you to pin a collection of bookmarks for easy access. This is done by selecting a bookmark folder name, which contents will be added to the list.";
+  chipsssss = document.createElement("div");
+  chipsssss.id = "skip-folder-chips";
+
   list.appendChildren([
     SettingsHeadline("Colors:"),
-    wrapInInset(colorSettings(options)),
+    colorSettingsWrapped(options),
     SettingsHeadline("Favorites:"),
-    wrapInInset(createTextInput("Favorite Folder Identifier", "favorites")),
+    wrapInInset([
+      inputLabel,
+      CreateDivWithClass("spacer"),
+      createTextInputWithLabel(
+        `Selected Favorites Folder:`,
+        (value) => console.log("buttonpress", value),
+        checkIcon(),
+        false
+      ),
+    ]),
     SettingsHeadline("Remove Folder from Tree:"),
-    wrapInInset(createChips()),
+    wrapInInset(chipsssss),
+    CreateDivWithClass("spacer"),
+  ]);
+ thoseChipsLikeTheFolderSkipList = new Chips(chipsssss.id, [
+    "baum",
+    "very long chipname",
+    "tits",
+    "an even longer more humongos, unecesasry elngthy chipname",
+    "test",
   ]);
 }
-function wrapInInset(elements) {
-  const wrapper = CreateDivWithClass("inset-settings");
-  if (elements.length != undefined) {
-    wrapper.appendChildren(elements);
-  } else {
-    wrapper.appendChild(elements);
-  }
-  return wrapper;
-}
 
-function writeSkipFoldersToSettings(folderNames){
-
-}
 
 function openSettings() {
   setSettingsVariable("unset");
@@ -48,24 +59,10 @@ function closeSettings() {
   setSettingsVariable("none");
 }
 
-function createTextInput(title, placeholder) {
-  const lsitelement = CreateElementWithClass("li");
-  const label = CreateElementWithClass("span");
-  label.innerHTML = title;
-  const input = CreateElementWithClass("input");
-  input.placeholder = placeholder;
-  input.value = globalBookmarkTreeOptions.favoriteFolderIdentifier;
-  lsitelement.appendChildren([label, input]);
-  //todo add apply button
-  return lsitelement;
-}
-
-//TODO add multistring input maybe like chips?
-
 function SettingsHeadline(text) {
   const headline = CreateElementWithClass("h2", "settings-section");
   headline.innerHTML = text;
   const link = CreateElementWithClass("li");
-  link.appendChildren([headline]);
+  link.appendChild(headline);
   return link;
 }

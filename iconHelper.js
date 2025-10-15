@@ -44,9 +44,9 @@ function drawTrashCanIcon(id) {
 function drawBookmarkIcon(url) {
   let img = document.createElement("img");
   img.onload = function () {
-    if (isDefaultChromeImage(img)) {
-      img.className += " defaultFavImage ";
-    }
+    // if (isDefaultChromeImage(img)) {
+    //   img.className += " defaultFavImage ";
+    // }
     if ("naturalHeight" in this) {
       if (this.naturalHeight + this.naturalWidth === 0) {
         this.onerror();
@@ -94,4 +94,7 @@ function colorIcon() {
 
 function addIcon() {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" ><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>`;
+}
+function checkIcon() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>`;
 }
