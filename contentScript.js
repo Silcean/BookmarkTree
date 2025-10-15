@@ -69,7 +69,7 @@ function init() {
   console.log("Initialising application");
   initSearch();
   chrome.storage.sync.get("bookmark-tree-settings", function (obj) {
-    localOptions;
+    let localOptions;
     if (!obj || Object.keys(obj).length === 0) {
       localOptions = defaultOptios;
     } else {
@@ -95,6 +95,7 @@ function consumeOptionsUpdate(newOptions) {
   globalBookmarkTreeOptions = newOptions;
   console.log("apply loaded options", newOptions);
   setSearchEnabled(newOptions.enableSearch);
+  writeSkipFoldersToSettings(newOptions.skipFolders)
   applyColorsToCss(newOptions)
 }
 
