@@ -1,8 +1,12 @@
 class Chips {
   currentChipsValues = [];
   containerId = "";
-  constructor(containerId, strings) {
+  changeCallback = (folderNames) => {
+    console.log("Cips call updated ", folderNames);
+  };
+  constructor(containerId, strings, changeCallback) {
     this.containerId = containerId;
+    if (changeCallback) this.changeCallback = changeCallback;
     if (strings) {
       for (const tag of strings) {
         this.currentChipsValues.push(tag);
@@ -11,7 +15,6 @@ class Chips {
     this.createChips();
   }
 
-  //TODO apply this to settings
   createChips() {
     const chipscontainer = CreateDivWithClass("chips", "chips-container");
     const currentChipsContainer = CreateDivWithClass(
@@ -21,9 +24,9 @@ class Chips {
     const clickhandler = (newvalue) => {
       if (this.currentChipsValues.indexOf(newvalue) == -1 && newvalue != "")
         this.currentChipsValues.push(newvalue);
-      this.renderChips();
+      this.updateChips();
     };
-    const inputfield = createTextInput(clickhandler, addIcon(), true);
+    const inputfield = createTextInput(clickhandler, addIcon(),"", true);
     const inputLabel = CreateElementWithClass("span");
     inputLabel.innerHTML = "Add folder name to skip list:";
     chipscontainer.appendChildren([
@@ -31,12 +34,15 @@ class Chips {
       inputfield,
       currentChipsContainer,
     ]);
-    document.getElementById(this.containerId).appendChild(chipscontainer)
-    this.renderChips()
+    document.getElementById(this.containerId).appendChild(chipscontainer);
+    this.updateChips();
   }
 
   createSingleChip(name) {
-    const chipcontainer = CreateDivWithClass("single-chip", this.getChipId(name));
+    const chipcontainer = CreateDivWithClass(
+      "single-chip",
+      this.getChipId(name)
+    );
     const label = CreateElementWithClass("span");
     label.innerHTML = name;
     const button = CreateElementWithClass("button", "text-input-apply-button");
@@ -54,12 +60,18 @@ class Chips {
       const chipelement = document.getElementById(this.getChipId(name));
       chipelement.remove();
     }
-    this.renderChips();
+    this.updateChips();
   }
 
   addChip(name) {
     this.currentChipsValues.push(name);
+    this.updateChips();
+  }
+
+  updateChips() {
     this.renderChips();
+    console.log(this.currentChipsValues);
+    this.changeCallback(this.currentChipsValues);
   }
 
   renderChips() {
@@ -67,7 +79,6 @@ class Chips {
       this.getCurrentChipsContainerid()
     );
     container.innerHTML = "";
-    console.log(this.currentChipsValues);
     for (let index = 0; index < this.currentChipsValues.length; index++) {
       container.appendChild(
         this.createSingleChip(this.currentChipsValues[index])

@@ -1,26 +1,11 @@
 /* #region Initial Variables */
-console.log("init contentscript")
-let globalBookmarkTreeOptions = {};
-let defaultOptios = {
-  enableSearch: true,
-  skipFolders: ["Mozilla Firefox"],
-  favoriteFolderIdentifier: "Favorites",
-  preactivatedList: ["Bookmarks", "Kategorie"],
-  colors:{
-    background:"#48bf91",
-    folderBackground:"#036952",
-    folderBackgroundActivated:"#004b3a",
-    folderTextColor:"#97b4ad",
-    textColor:"black",
-  }
-};
+console.log("init contentscript");
 
 let relpath = chrome.runtime.getURL("/");
 console.log("extension path=" + relpath);
 
 let tree;
 let currentlyActive = [];
-let toactivatelist = [];
 let onclicklisteners = [];
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -75,33 +60,12 @@ function init() {
     } else {
       localOptions = obj["bookmark-tree-settings"];
     }
-    consumeOptionsUpdate(localOptions);
-    initSettings(localOptions)
+    globalBookmarkTreeOptions = localOptions;
+    setOptions(localOptions);
+    initSettings(localOptions);
     drawTree();
     return obj;
   });
-}
-
-function getOptions() {
-  chrome.storage.sync.get("bookmark-tree-settings", function (obj) {
-    globalBookmarkTreeOptions = obj["bookmark-tree-settings"];
-    consumeOptionsUpdate(globalBookmarkTreeOptions);
-    drawTree();
-    return obj;
-  });
-}
-
-function consumeOptionsUpdate(newOptions) {
-  globalBookmarkTreeOptions = newOptions;
-  console.log("apply loaded options", newOptions);
-  setSearchEnabled(newOptions.enableSearch);
-  // writeSkipFoldersToSettings(newOptions.skipFolders)
-  applyColorsToCss(newOptions)
-}
-
-function setOptions(newOptions) {
-  consumeOptionsUpdate(newOptions);
-  chrome.storage.sync.set({ "bookmark-tree-settings": newOptions });
 }
 
 function removeBm(trashid) {
@@ -114,11 +78,17 @@ function removeBm(trashid) {
   chrome.runtime.sendMessage({ deleteBm: bmid });
 }
 
-function removeFromActiveArray(element) {
+function removeFromActiveArray(id) {
   let filtered = currentlyActive.filter(function (value) {
-    return value[0] !== element[0] && value[1] !== element[1];
+    return value.id !== id;
   });
   currentlyActive = filtered;
+  setOptions({ openedFolders: currentlyActive.map((x) => x.id) });
+}
+
+function addToActiveArray(element) {
+  currentlyActive.push(element);
+  setOptions({ openedFolders: currentlyActive.map((x) => x.id) });
 }
 
 function drawTree() {
@@ -126,13 +96,18 @@ function drawTree() {
   let thumbnaildiv = CreateDivWithClass("thumbnailcontainer");
   let displaydiv = CreateDivWithClass("displaycontainer");
   let bmdiv = CreateDivWithClass("bmcontainer");
+  clearFavorites();
   bm.innerHTML = "";
   bm.appendChildren([thumbnaildiv, displaydiv, bmdiv]);
   recursiveDrawObj(tree, thumbnaildiv, displaydiv, bmdiv, depth);
 
-  //preactivates a few things.
-  toactivatelist.forEach((e) => {
-    toggleFolderbyClassIntoDisplaydiv(document.getElementById(e));
+  globalBookmarkTreeOptions.openedFolders.forEach((e) => {
+    const foundElement = document.getElementById(e);
+    if (foundElement) {
+      toggleFolderbyClassIntoDisplaydiv(foundElement);
+    } else {
+      //TODO remove from array
+    }
   });
 }
 
@@ -144,31 +119,35 @@ function toggleFolderbyClassIntoDisplaydiv(sender) {
     //isopen=> set to collapse
     objectsfolder.classList.remove("active");
     sender.classList.remove("active");
-    removeFromActiveArray([classes[1], sender.id]);
+    removeFromActiveArray(sender.id);
   } else {
     //iscollapes => set to open
     //see if other thumbnail in same region is open
     let elementActiveInSameDisplayContainer = currentlyActive.find(
-      (elem) => elem[0] === classes[1]
+      (elem) => elem.class === classes[1]
     );
     if (elementActiveInSameDisplayContainer != undefined) {
       // one is open
 
       //remove display
       let activediv = document.getElementById(
-        getFolderContentId(elementActiveInSameDisplayContainer[1])
+        getFolderContentId(elementActiveInSameDisplayContainer.id)
       );
       activediv.classList.remove("active");
       //remove active status from thumbnail
 
       let activethumbnail = document.getElementById(
-        elementActiveInSameDisplayContainer[1]
+        elementActiveInSameDisplayContainer.id
       );
       activethumbnail.classList.remove("active");
       //remove from list of currently active thumbnails
-      removeFromActiveArray(elementActiveInSameDisplayContainer);
+      removeFromActiveArray(elementActiveInSameDisplayContainer.id);
     }
-    currentlyActive.push([classes[1], sender.id]);
+    addToActiveArray({
+      name: sender.innerHTML,
+      class: classes[1],
+      id: sender.id,
+    });
     objectsfolder.classList.add("active");
     sender.classList.add("active");
   }
@@ -271,9 +250,6 @@ function drawFolder(obj, superthumbnaildiv, superdisplaydiv, depth) {
     recursiveDrawObj(e, thumbnaildiv, displaydiv, bmdiv, depth);
   });
   superdisplaydiv.appendChild(contentcontainer);
-  if (globalBookmarkTreeOptions.preactivatedList.indexOf(obj.title) != -1) {
-    toactivatelist.push(obj.id);
-  }
   depth++;
 }
 
@@ -286,8 +262,8 @@ function drawTrashCan(id) {
   return imgtrash;
 }
 
-function drawFavorites(test) {
-  var sites = test.children;
+function drawFavorites(inputFolder) {
+  var sites = inputFolder.children;
   let list = document.getElementById("favoritesList");
   for (let i = 0; i < sites.length; i++) {
     list.innerHTML +=
@@ -301,4 +277,9 @@ function drawFavorites(test) {
       sites[i].title +
       "</a></li>";
   }
+}
+
+function clearFavorites() {
+  let list = document.getElementById("favoritesList");
+  list.innerHTML = "";
 }

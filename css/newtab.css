@@ -28,10 +28,10 @@ body {
 }
 
 /* Hide scrollbar for chrome, Safari and Opera */
-
+/* 
 body::-webkit-scrollbar {
   display: none;
-}
+} */
 .large-text {
   font-size: 150%;
   font-family: Fira Code;

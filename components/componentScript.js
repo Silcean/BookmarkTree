@@ -1,6 +1,7 @@
 function createTextInput(
   callback,
   iconstring,
+  defaultValue,
   shouldClearInputAfterButtonPress
 ) {
   function applyChange() {
@@ -27,6 +28,7 @@ function createTextInput(
 
   applyButton.innerHTML = iconstring;
   textInputField.type = "text";
+  if (defaultValue) textInputField.value = defaultValue;
   inputContainer.appendChildren([textInputField, applyButton]);
   return inputContainer;
 }
@@ -35,12 +37,14 @@ function createTextInputWithLabel(
   labelstring,
   callback,
   iconstring,
+  defaultValue,
   shouldClearInputAfterButtonPress
 ) {
   const container = CreateDivWithClass("text-input-label");
   const inputfield = createTextInput(
     callback,
     iconstring,
+    defaultValue,
     shouldClearInputAfterButtonPress
   );
   const inputLabel = CreateElementWithClass("span");

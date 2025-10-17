@@ -8,7 +8,6 @@ function colorSettingsWrapped(options) {
   return wrappedColor
 }
 
-
 function colorSettings(options) {
   const colorbuttons = CreateElementWithClass("li");
   colorbuttons.appendChildren([createColorSettingsApplyButton(), createColorSettingsResetButton()]);
@@ -50,7 +49,6 @@ function watchColorPicker() {
 }
 
 function getDefaultColor(type, options) {
-  console.log(globalBookmarkTreeOptions);
   switch (type) {
     case "background":
       return options.colors.background;
@@ -114,13 +112,11 @@ function createColorSettingsApplyButton() {
   applyButton.innerHTML = `<span>Apply Colors</span>` + colorIcon();
   applyButton.style = "flex-grow: 1;";
   applyButton.onclick = () => {
-    let colors = getColorsFromInputs();
-    applyColorsToCss(colors);
-    globalBookmarkTreeOptions.color = colors;
-    setOptions(globalBookmarkTreeOptions);
+    setOptions({colors:getColorsFromInputs()})
   };
   return applyButton;
 }
+
 
 function getColorPickerValue(id) {
   return document.getElementById(id).value;

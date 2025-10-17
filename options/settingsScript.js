@@ -32,8 +32,9 @@ function initSettings(options) {
       CreateDivWithClass("spacer"),
       createTextInputWithLabel(
         `Selected Favorites Folder:`,
-        (value) => console.log("buttonpress", value),
+        (value) => updateFavorites(value),
         checkIcon(),
+        options.favoriteFolderIdentifier,
         false
       ),
     ]),
@@ -41,15 +42,20 @@ function initSettings(options) {
     wrapInInset(chipsssss),
     CreateDivWithClass("spacer"),
   ]);
- thoseChipsLikeTheFolderSkipList = new Chips(chipsssss.id, [
-    "baum",
-    "very long chipname",
-    "tits",
-    "an even longer more humongos, unecesasry elngthy chipname",
-    "test",
-  ]);
+  thoseChipsLikeTheFolderSkipList = new Chips(
+    chipsssss.id,
+    options.skipFolders,
+    updateSettingsFromFolderSkips
+  );
 }
 
+function updateSettingsFromFolderSkips(names) {
+  setOptions({skipFolders:names})
+}
+
+function updateFavorites(newFavorite) {
+  setOptions({favoriteFolderIdentifier:newFavorite});
+}
 
 function openSettings() {
   setSettingsVariable("unset");
@@ -66,3 +72,5 @@ function SettingsHeadline(text) {
   link.appendChild(headline);
   return link;
 }
+
+
