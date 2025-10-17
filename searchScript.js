@@ -1,9 +1,7 @@
 function setSearchEnabled(isEnabled) {
-  if (isEnabled) {
-    document.getElementById("search").style.display = "unset";
-  } else {
-    document.getElementById("search").style.display = "none";
-  }
+  document.getElementById("search").style.display = isEnabled
+    ? "unset"
+    : "none";
 }
 
 function initSearch() {

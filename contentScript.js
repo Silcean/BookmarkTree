@@ -52,6 +52,8 @@ function isFirstInit() {
 
 function init() {
   console.log("Initialising application");
+  ToggleSwitchListener("enableSearchInput","enableSearch");
+  ToggleSwitchListener("enableFavoritesInput","enableFavorites");
   initSearch();
   chrome.storage.sync.get("bookmark-tree-settings", function (obj) {
     let localOptions;
@@ -282,4 +284,20 @@ function drawFavorites(inputFolder) {
 function clearFavorites() {
   let list = document.getElementById("favoritesList");
   list.innerHTML = "";
+}
+
+function ToggleSwitchListener(switchId, optionsKey) {
+  document.getElementById(switchId).addEventListener("click", () => {
+    var checkBox = document.getElementById(switchId);
+    let empty = {};
+    empty[optionsKey] = checkBox.checked;
+    setOptions(empty);
+  });
+}
+
+
+function setFavoritesEnabled(isEnabled) {
+  document.getElementById("favoritesListContainer").style.display = isEnabled
+    ? "unset"
+    : "none";
 }

@@ -3,6 +3,7 @@ console.log("init options");
 let globalBookmarkTreeOptions = {};
 let defaultOptios = {
   enableSearch: true,
+  enableFavorites: true,
   skipFolders: ["Mozilla Firefox"],
   favoriteFolderIdentifier: "Favorites",
   openedFolders: ["Bookmarks", "Kategorie"],
@@ -26,6 +27,11 @@ function consumeSearchEnabledUpdate(isEnabled) {
   globalBookmarkTreeOptions.enableSearch = isEnabled;
 }
 
+function consumeFavoritesEnabledUpdate(isEnabled) {
+  setFavoritesEnabled(isEnabled);
+  globalBookmarkTreeOptions.enableFavorites = isEnabled;
+}
+
 function consumeSkipFoldersUpdate(folderNames) {
   globalBookmarkTreeOptions.skipFolders = folderNames;
   drawTree();
@@ -39,9 +45,15 @@ function consumeFavoriteUpdate(favoriteFolder) {
 function consumeOpenedFolders(folderNames) {
   globalBookmarkTreeOptions.openedFolders = folderNames;
 }
+
 function consumeOptionsUpdate(newOptions) {
   if (newOptions.colors) consumeColorsUpdate(newOptions.colors);
-  if (newOptions.enableSearch)
+  if (
+    newOptions.enableFavorites != null ||
+    newOptions.enableFavorites != undefined
+  )
+    consumeFavoritesEnabledUpdate(newOptions.enableFavorites);
+  if (newOptions.enableSearch != null || newOptions.enableSearch != undefined)
     consumeSearchEnabledUpdate(newOptions.enableSearch);
   if (newOptions.skipFolders) consumeSkipFoldersUpdate(newOptions.skipFolders);
   if (newOptions.favoriteFolderIdentifier)
