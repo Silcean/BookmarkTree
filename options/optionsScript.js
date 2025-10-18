@@ -4,9 +4,10 @@ let globalBookmarkTreeOptions = {};
 let defaultOptios = {
   enableSearch: true,
   enableFavorites: true,
-  skipFolders: ["Mozilla Firefox"],
+  enableTree: true,
+  skipFolders: [],
   favoriteFolderIdentifier: "Favorites",
-  openedFolders: ["Bookmarks", "Kategorie"],
+  openedFolders: [],
   colors: {
     background: "#48bf91",
     folderBackground: "#036952",
@@ -42,6 +43,11 @@ function consumeFavoriteUpdate(favoriteFolder) {
   return true;
 }
 
+function consumeEnableTreeUpdate(enableTree) {
+  setTreeEnabled(enableTree)
+  globalBookmarkTreeOptions.enableTree = enableTree;
+}
+
 function consumeOpenedFolders(folderNames) {
   globalBookmarkTreeOptions.openedFolders = folderNames;
 }
@@ -55,6 +61,7 @@ function consumeOptionsUpdate(newOptions, allowTreeRedraw) {
   );
   executeIfValueHasBeenSet(newOptions.enableSearch, consumeSearchEnabledUpdate);
   executeIfValueHasBeenSet(newOptions.openedFolders, consumeOpenedFolders);
+  executeIfValueHasBeenSet(newOptions.enableTree,consumeEnableTreeUpdate)
 
   shouldRerenderTree = executeIfValueHasBeenSet(newOptions.skipFolders,consumeSkipFoldersUpdate)
     ||executeIfValueHasBeenSet(newOptions.favoriteFolderIdentifier,consumeFavoriteUpdate)

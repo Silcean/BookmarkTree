@@ -6,7 +6,6 @@ console.log("extension path=" + relpath);
 
 let tree;
 let currentlyActive = [];
-let onclicklisteners = [];
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.giveTreeUwU != undefined) {
@@ -54,6 +53,7 @@ function init() {
   console.log("Initialising application");
   ToggleSwitchListener("enableSearchInput", "enableSearch");
   ToggleSwitchListener("enableFavoritesInput", "enableFavorites");
+  ToggleSwitchListener("enableBookmarkTreeInput", "enableTree");
   initSearch();
   chrome.storage.sync.get("bookmark-tree-settings", function (obj) {
     let localOptions;
@@ -218,7 +218,6 @@ function drawFolder(obj, superthumbnaildiv, superdisplaydiv, depth) {
   thumbnail.innerHTML = obj.title;
   superthumbnaildiv.appendChild(thumbnail);
 
-  onclicklisteners.push(thumbnail.id);
   //containerdiv, is unique to every folder
   let contentcontainer = CreateDivWithClass(
     "contentcontainer " +
@@ -255,13 +254,11 @@ function drawFolder(obj, superthumbnaildiv, superdisplaydiv, depth) {
   depth++;
 }
 
-function drawTrashCan(id) {
-  let imgtrash = drawTrashCanIcon(id);
-  imgtrash.onclick = function (e) {
-    removeBm(e.target.id);
-  };
-  onclicklisteners.push(imgtrash.id);
-  return imgtrash;
+function createDeleteButton(id) {
+  const button = CreateElementWithClass("button", "icon-button");
+  button.onclick = () => removeBm(e.target.id);;
+  button.innerHTML=trashIcon();
+  return button;
 }
 
 function drawFavorites(inputFolder) {
@@ -297,8 +294,16 @@ function ToggleSwitchListener(switchId, optionsKey) {
   });
 }
 
+function SetToggleSwitchValue(switchId, value) {
+  document.getElementById(switchId).checked = value;
+}
+
 function setFavoritesEnabled(isEnabled) {
-  document.getElementById("favoritesListContainer").style.display = isEnabled
-    ? "unset"
-    : "none";
+  document.body.classList.toggle("favorites-disabled", !isEnabled);
+  SetToggleSwitchValue("enableFavoritesInput", isEnabled);
+}
+
+function setTreeEnabled(isEnabled) {
+  document.body.classList.toggle("bookmark-disabled", !isEnabled);
+  SetToggleSwitchValue("enableBookmarkTreeInput", isEnabled);
 }

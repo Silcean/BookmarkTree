@@ -16,20 +16,14 @@ function initSettings(options) {
     toggleSettings();
   };
   settingsButton.onclick = onClick;
-  const list = document.getElementById("settings-list");
-  const inputLabel = CreateElementWithClass("span");
-  inputLabel.innerHTML =
-    "Favorite bookmarks allow you to pin a collection of bookmarks for easy access. This is done by selecting a bookmark folder name, which contents will be added to the list.";
-  chipsssss = document.createElement("div");
-  chipsssss.id = "skip-folder-chips";
 
-  list.appendChildren([
-    SettingsHeadline("Colors:"),
-    colorSettingsWrapped(options),
-    SettingsHeadline("Favorites:"),
-    wrapInInset([
-      inputLabel,
-      CreateDivWithClass("spacer"),
+  document
+    .getElementById("color-settings-container")
+    .appendChildren(colorSettings(options));
+
+  document
+    .getElementById("favorites-settings-container")
+    .appendChildren([
       createTextInputWithLabel(
         `Selected Favorites Folder:`,
         (value) => updateFavorites(value),
@@ -37,24 +31,21 @@ function initSettings(options) {
         options.favoriteFolderIdentifier,
         false
       ),
-    ]),
-    SettingsHeadline("Remove Folder from Tree:"),
-    wrapInInset(chipsssss),
-    CreateDivWithClass("spacer"),
-  ]);
+    ]);
+    
   thoseChipsLikeTheFolderSkipList = new Chips(
-    chipsssss.id,
+    "skip-folder-chips",
     options.skipFolders,
     updateSettingsFromFolderSkips
   );
 }
 
 function updateSettingsFromFolderSkips(names) {
-  setOptions({skipFolders:names})
+  setOptions({ skipFolders: names });
 }
 
 function updateFavorites(newFavorite) {
-  setOptions({favoriteFolderIdentifier:newFavorite});
+  setOptions({ favoriteFolderIdentifier: newFavorite });
 }
 
 function openSettings() {
@@ -72,5 +63,3 @@ function SettingsHeadline(text) {
   link.appendChild(headline);
   return link;
 }
-
-

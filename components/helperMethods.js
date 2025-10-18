@@ -13,15 +13,7 @@ function CreateElementWithClass(elementName, classname, id) {
   if (id) div.id = id;
   return div;
 }
-function wrapInInset(elements) {
-  const wrapper = CreateDivWithClass("inset-settings");
-  if (elements.length != undefined) {
-    wrapper.appendChildren(elements);
-  } else {
-    wrapper.appendChild(elements);
-  }
-  return wrapper;
-}
+
 HTMLElement.prototype.appendChildren = function (children) {
   if (!Array.isArray(children)) {
     throw new Error("appendChildren expects an array of HTMLElements");

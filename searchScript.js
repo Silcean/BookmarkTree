@@ -1,7 +1,9 @@
 function setSearchEnabled(isEnabled) {
-  document.getElementById("search").style.display = isEnabled
-    ? "unset"
-    : "none";
+  const element = document.getElementById("search");
+  document.getElementById("search").style = !isEnabled
+    ? "display: none;"
+    : "";
+  SetToggleSwitchValue("enableSearchInput", isEnabled);
 }
 
 function initSearch() {

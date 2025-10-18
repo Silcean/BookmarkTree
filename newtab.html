@@ -2,6 +2,7 @@
 <html>
   <head>
     <link href="/css/newtab.css" rel="stylesheet" />
+    <link href="/css/components.css" rel="stylesheet" />
     <link href="/css/fira_code.css" rel="stylesheet" />
     <script src="/components/helperMethods.js"></script>
     <script src="/components/iconHelper.js"></script>
@@ -16,45 +17,43 @@
   </head>
   <title>New Tab</title>
   <body>
-    <div id="bm"></div>
-    <div id="favoritesListContainer" class="large-text">
+    <div id="layout-bm-and-search">
+      <div id="search" class="large-text">
+        <div>
+          <input id="searchinput" />
+          <button id="search-execute-button" class="raised-icon-button">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 -960 960 960"
+              fill="#00000"
+            >
+              <path
+                d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"
+              />
+            </svg>
+          </button>
+          <button id="clearbutton" class="raised-icon-button">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 -960 960 960"
+              fill="#00000"
+            >
+              <path
+                d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+              />
+            </svg>
+          </button>
+        </div>
+        <ul id="searchResultList" class="overlay-container"></ul>
+      </div>
+      <div id="bm"></div>
+    </div>
+    <div id="layout-favorites-container" class="large-text">
       <ul id="favoritesList"></ul>
     </div>
-    <div id="search" class="large-text">
-      <div>
-        <input id="searchinput" />
-        <button id="search-execute-button" class="searchbutton">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 -960 960 960"
-            fill="#00000"
-          >
-            <path
-              d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"
-            />
-          </svg>
-        </button>
-        <button id="clearbutton" class="searchbutton">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 -960 960 960"
-            fill="#00000"
-          >
-            <path
-              d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
-            />
-          </svg>
-        </button>
-      </div>
-      <ul id="searchResultList" class="overlay-container"></ul>
-    </div>
     <div id="settingsContainer">
-      <button
-        id="settings-toggle-button"
-        class="buttonDefaultStyleOverwrite center-left"
-      >
+      <button id="settings-toggle-button" class="icon-button">
         <svg
-          class="buttonIcon"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 -960 960 960"
           fill="#e3e3e3"
@@ -66,20 +65,81 @@
       </button>
       <div class="settings-display-element settings-dialog">
         <ul id="settings-list" class="overlay-container">
-          <li>
-            <h3>Enable Search</h3>
-            <label class="switch">
-              <input type="checkbox" id="enableSearchInput" />
-              <span class="slider round"></span>
-            </label>
+          <li style="padding-top: 1px">
+            <h2>Colors:</h2>
+            <div
+              class="inset-settings"
+              id="color-settings-container"
+              style="max-width: 17em"
+            ></div>
           </li>
           <li>
-            <h3>Enable Favorites</h3>
+            <h2>Search:</h2>
+            <div
+              class="inset-settings"
+              id="search-settings-container"
+              style="max-width: 25em"
+            >
+              <div class="toggle-switch-container">
+                <h3>Enable Search:</h3>
+                <label class="switch">
+                  <input type="checkbox" id="enableSearchInput" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+          </li>
+          <li>
+            <h2>Favorites:</h2>
+            <div
+              class="inset-settings"
+              id="favorites-settings-container"
+              style="max-width: 25em"
+            >
+              <span
+                >Favorite bookmarks allow you to pin a collection of bookmarks
+                for easy access. This is done by selecting a bookmark folder
+                name, which contents will be added to the list.</span
+              >
+              <div class="toggle-switch-container">
+                <h3>Enable Favorites:</h3>
+                <label class="switch">
+                  <input type="checkbox" id="enableFavoritesInput" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+          </li>
+          <li>
+            <h2>Tree modification:</h2>
 
-            <label class="switch">
-              <input type="checkbox"  id="enableFavoritesInput"/>
-              <span class="slider round"></span>
-            </label>
+            <div
+              class="inset-settings"
+              id="treemod-settings-container"
+              style="padding-bottom: 15px"
+            >
+              <div class="toggle-switch-container">
+                <h3>Enable Bookmarks:</h3>
+                <label class="switch">
+                  <input type="checkbox" id="enableBookmarkTreeInput" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <input
+                id="layout-ratio-slider"
+                type="range"
+                min="10"
+                max="90"
+                value="66"
+              />
+              <h3>Remove Folder from Tree:</h3>
+              <span
+                >Allows to exlude folders from search and the Tree-View. This
+                can be done for performance reason, or to exclude unecessary
+                information.</span
+              >
+              <div id="skip-folder-chips"></div>
+            </div>
           </li>
         </ul>
       </div>

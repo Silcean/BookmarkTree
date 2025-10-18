@@ -15,6 +15,6 @@ drawBookMarkLink = (containerType, obj, depth, shouldDrawTrashCan) => {
   a.appendChild(drawBookmarkIcon(obj.url));
   a.appendChild(titlespan);
   container.appendChild(a);
-  if (shouldDrawTrashCan) container.appendChild(drawTrashCan(obj.id));
+  if (shouldDrawTrashCan) container.appendChild(createDeleteButton(obj.id));
   return container;
 };

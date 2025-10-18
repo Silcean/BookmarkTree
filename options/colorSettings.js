@@ -1,13 +1,4 @@
 
-function colorSettingsWrapped(options) {
-  const colorbuttons = CreateElementWithClass("li");
-  colorbuttons.appendChildren([createColorSettingsApplyButton(), createColorSettingsResetButton()]);
-  colorbuttons.style = "display: flex;";
-  const wrappedColor = wrapInInset(colorSettings(options));
-  wrappedColor.style = "max-width:17em;";
-  return wrappedColor
-}
-
 function colorSettings(options) {
   const colorbuttons = CreateElementWithClass("li");
   colorbuttons.appendChildren([createColorSettingsApplyButton(), createColorSettingsResetButton()]);
@@ -92,7 +83,7 @@ function createColorPicker(id, type, options) {
 function createColorSettingsResetButton() {
   const resetButton = CreateElementWithClass(
     "button",
-    "resetbutton searchbutton optionsbutton"
+    "raised-text-icon-button"
   );
   resetButton.innerHTML = `<span>Reset Colors</span>` + resetIcon();
   resetButton.style = "flex-grow: 1;";
@@ -107,7 +98,7 @@ function createColorSettingsResetButton() {
 function createColorSettingsApplyButton() {
   const applyButton = CreateElementWithClass(
     "button",
-    "resetbutton searchbutton optionsbutton"
+    "raised-text-icon-button"
   );
   applyButton.innerHTML = `<span>Apply Colors</span>` + colorIcon();
   applyButton.style = "flex-grow: 1;";

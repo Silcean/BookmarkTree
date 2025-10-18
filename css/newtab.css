@@ -9,6 +9,7 @@
   --color-selector-bubble-size: 24px;
   --overlay-container-color: honeydew;
   --overlay-container-accent-color: #97b4ad;
+  --raised-button-background: rgba(245, 245, 245, 0.616);
 }
 
 a,
@@ -21,10 +22,64 @@ a:active {
 
 body {
   background-color: var(--bg-color);
-  overflow-y: scroll;
   font-size: 100%;
+  height: 100%;
   font-family: Fira Code;
-  /* Add the ability to scroll */
+}
+
+/* #layout-bm-and-search {
+  margin-top: 5%;
+  width: 55%;
+  position: relative;
+  left: 10%;
+  font-family: Fira Code;
+}
+
+#layout-favorites-container {
+  position: absolute;
+  left: 66%;
+  top: 35%;
+} */
+
+#layout-bm-and-search {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 66.66%;
+  height: 100%;
+  transition: width 0.3s ease;
+  padding-top: 5%;
+  padding-left: 10%;
+  box-sizing: border-box;
+  font-family: Fira Code;
+}
+
+#layout-favorites-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 33.33%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+body.favorites-disabled #layout-favorites-container {
+  width: 0%;
+}
+
+body.favorites-disabled #layout-bm-and-search {
+  width: 100%;
+}
+
+body.bookmark-disabled #layout-favorites-container {
+  width: 100%;
+}
+
+body.bookmark-disabled #layout-bm-and-search {
+    width: 0%;
+  visibility: hidden;
+
 }
 
 /* Hide scrollbar for chrome, Safari and Opera */
@@ -36,32 +91,12 @@ body::-webkit-scrollbar {
   font-size: 150%;
   font-family: Fira Code;
 }
+
 .imgtile > img {
   position: relative;
   top: 7px;
   left: 7px;
   width: 27px;
-}
-
-#bm {
-  position: absolute;
-  width: 55%;
-  left: 10%;
-  top: 10%;
-}
-
-#favoritesListContainer {
-  position: absolute;
-  left: 66%;
-  top: 35%;
-}
-
-#search {
-  left: 10%;
-  top: 2.5%;
-  font-size: 150%;
-  font-family: Fira Code;
-  position: absolute;
 }
 
 ul li {
@@ -77,74 +112,6 @@ ul {
   height: 40px;
   display: inline-block;
   background-color: black;
-}
-
-.bookmark-line-element {
-  color: var(--default-text-color);
-  margin: 2px;
-  width: 100%;
-  display: flow-root;
-  height: 40px;
-}
-
-.bookmark-line-element > a > span {
-  vertical-align: middle;
-  display: inline-block;
-  width: 85%;
-  font-size: 90%;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.bookmark-line-element > a:hover > span {
-  font-size: 100%;
-}
-
-.bookmark-line-element > a > .bookmark-line-element-favicon {
-  vertical-align: middle;
-  margin-right: 10px;
-  position: relative;
-  width: 25px;
-  transition: width 0.2s;
-}
-
-.bookmark-line-element > a:hover > .bookmark-line-element-favicon {
-  transform: scale(1.2) rotate(20deg);
-}
-
-.line-hover-icon {
-  vertical-align: middle;
-  float: right;
-  width: 30px;
-  transition: transform 0.2s;
-}
-
-.line-hover-icon:hover {
-  transform: scale(1.2) rotate(20deg);
-}
-
-.thumbnailcontainer {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.thumbnail {
-  left: 30px;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: var(--folder-color);
-  color: var(--folder-text-color);
-  border-radius: 10px;
-  width: 7.5em;
-  height: 7.5em;
-}
-
-.thumbnail.active {
-  background-color: var(--folder-open-color);
-  border-radius: 10px;
 }
 
 .contentcontainer > .line {
@@ -189,6 +156,7 @@ transition: property name | duration | timing function | delay
 /*
 Search css
 */
+
 #searchinput {
   padding: 5px;
   color: none;
@@ -196,6 +164,7 @@ Search css
   background-color: rgba(245, 245, 245, 0.616);
   border: 2px solid rgb(70, 70, 70);
   border-radius: 15px;
+  font-family: "Fira Code";
   font-size: large;
 }
 
@@ -211,9 +180,6 @@ Search css
   margin-top: 5px;
   margin-bottom: 5px;
 }
-#search {
-  width: 55%;
-}
 
 #search > div > button > svg {
   height: 100%;
@@ -224,24 +190,6 @@ Search css
   display: inline-flex;
 }
 
-.searchbutton {
-  margin-left: 2px;
-  padding: 5px;
-  color: none;
-  text-align: center;
-  text-decoration: none;
-  background-color: rgba(245, 245, 245, 0.616);
-  border: 2px solid rgb(70, 70, 70);
-  border-radius: 15px;
-}
-
-.searchbutton:hover {
-  background-color: rgba(185, 185, 185, 0.616);
-}
-.searchbutton:active {
-  background-color: rgba(160, 160, 160, 0.616);
-}
-
 .defaultFavImage {
   filter: brightness(0);
 }
@@ -250,51 +198,18 @@ Search css
 Settings css
 */
 #settingsContainer {
-  top: 5px;
-  right: 5px;
+  top: 15px;
+  right: 15px;
   position: absolute;
 }
 .settings-display-element {
   display: var(--display-setting-element);
 }
 
-.buttonIcon {
-  width: 24px;
-  padding: 5px;
-  fill: var(--default-text-color);
-  transition: width 0.2s;
-}
-.buttonIcon:hover {
-  transform: scale(1.2) rotate(20deg);
-}
-
-.buttonDefaultStyleOverwrite {
-  border: none;
-  background-color: unset;
-  text-align: center;
-  text-decoration: none;
-}
-
-.center-left {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 .settings-dialog {
   position: absolute;
   top: 30px;
   right: 30px;
-}
-
-.resetbutton {
-  height: 3.5em;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 5px;
-  margin: 5px;
-  fill: var(--default-text-color);
-  transition: width 0.2s;
 }
 
 .color-setting {
@@ -309,116 +224,6 @@ Settings css
   gap: 0.5rem;
 }
 
-.color-bubble {
-  position: relative;
-  display: inline-block;
-  width: var(--color-selector-bubble-size);
-  height: var(--color-selector-bubble-size);
-  border-radius: 50%;
-  border: 2px var(--divider-line-color) solid;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-/* Make the color fill the circle */
-.color-bubble input[type="color"] {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-
-  /* Remove browser styling */
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-/* For WebKit browsers (Chrome, Safari, Edge) */
-.color-bubble input[type="color"]::-webkit-color-swatch-wrapper {
-  padding: 0;
-}
-.color-bubble input[type="color"]::-webkit-color-swatch {
-  border: none;
-  border-radius: 50%;
-}
-
-/* For Firefox */
-.color-bubble input[type="color"]::-moz-color-swatch {
-  border: none;
-  border-radius: 50%;
-}
-
-.optionsbutton > svg {
-  fill: var(--default-text-color);
-  width: 24px;
-  height: 24px;
-}
-
-/*
-chips
-*/
-.current-chips-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.single-chip {
-  display: flex;
-  align-items: center;
-  margin-right: 5px;
-  padding-left: 4px;
-  width: fit-content;
-  border-radius: 100px;
-  background-color: var(--overlay-container-accent-color);
-}
-
-.single-chip > span {
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.text-input-apply-button {
-  padding: 1px;
-  margin: 2px;
-  width: 20px;
-  height: 20px;
-  border: none;
-  border-radius: 100px;
-  background-color: var(--overlay-container-color);
-  text-align: center;
-  text-decoration: none;
-  margin-left: 5px;
-}
-
-.text-input {
-  border: none;
-  background-color: unset;
-  padding: 5px;
-  font-size: 90%;
-  font-family: Fira Code;
-}
-.text-input:focus-visible {
-  background-color: unset;
-  outline: unset;
-  color: unset;
-}
-
-.input-field-container {
-  margin-top: 5px;
-  margin-bottom: 10px;
-  display: flex;
-  align-content: center;
-  width: fit-content;
-  border: none;
-  border-radius: 50px;
-  background-color: var(--overlay-container-accent-color);
-  padding: 5px;
-}
-
 .settings-section {
   padding-top: 10px;
   margin-bottom: 0px;
@@ -428,70 +233,6 @@ chips
   margin-left: 1em;
 }
 
-.spacer{
+.spacer {
   height: 1em;
-}
-
-
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #2196F3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
 }

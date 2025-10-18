@@ -33,14 +33,6 @@ function isDefaultChromeImage(img) {
   return isMatch;
 }
 
-function drawTrashCanIcon(id) {
-  let imgtrash = document.createElement("img");
-  imgtrash.src = trashIcon();
-  imgtrash.id = "remove" + id;
-  imgtrash.className = "line-hover-icon";
-  return imgtrash;
-}
-
 function drawBookmarkIcon(url) {
   let img = document.createElement("img");
   img.onload = function () {
@@ -64,18 +56,11 @@ function drawBookmarkIcon(url) {
 }
 
 function trashIcon() {
-  // <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
-  //   <polyline points="3 6 5 6 21 6"></polyline>
-  //   <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-  //   <line x1="10" y1="11" x2="10" y2="17"></line>
-  //   <line x1="14" y1="11" x2="14" y2="17"></line>
-  // </svg>
-
-  return "data:image/svg+xml;base64,IDxzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB3aWR0aD0nNTInIGhlaWdodD0nNTInIHZpZXdCb3g9JzAgMCAyNCAyNCcgZmlsbD0nbm9uZScgc3Ryb2tlPSdjdXJyZW50Q29sb3InIHN0cm9rZS13aWR0aD0nMS41JyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnIGNsYXNzPSdmZWF0aGVyIGZlYXRoZXItdHJhc2gtMic+PHBvbHlsaW5lIHBvaW50cz0nMyA2IDUgNiAyMSA2Jz48L3BvbHlsaW5lPjxwYXRoIGQ9J00xOSA2djE0YTIgMiAwIDAgMS0yIDJIN2EyIDIgMCAwIDEtMi0yVjZtMyAwVjRhMiAyIDAgMCAxIDItMmg0YTIgMiAwIDAgMSAyIDJ2Mic+PC9wYXRoPjxsaW5lIHgxPScxMCcgeTE9JzExJyB4Mj0nMTAnIHkyPScxNyc+PC9saW5lPjxsaW5lIHgxPScxNCcgeTE9JzExJyB4Mj0nMTQnIHkyPScxNyc+PC9saW5lPjwvc3ZnPg==";
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" ><path d="M308-140q-37 0-61.5-24.5T222-226v-498h-40v-54h176v-36h246v36h176v54h-40v498q0 36.73-24.64 61.36Q690.72-140 654-140H308Zm378-584H276v498q0 14 9 23t23 9h346q12 0 22-10t10-22v-498ZM381-275h54v-368h-54v368Zm146 0h54v-368h-54v368ZM276-724v530-530Z"/></svg>`;
 }
 
 function resetIcon() {
-  return `<svg class="buttonIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"  ><path d="M280-200v-80h284q63 0 109.5-40T720-420q0-60-46.5-100T564-560H312l104 104-56 56-200-200 200-200 56 56-104 104h252q97 0 166.5 63T800-420q0 94-69.5 157T564-200H280Z"/></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"  ><path d="M280-200v-80h284q63 0 109.5-40T720-420q0-60-46.5-100T564-560H312l104 104-56 56-200-200 200-200 56 56-104 104h252q97 0 166.5 63T800-420q0 94-69.5 157T564-200H280Z"/></svg>`;
 }
 function closeIcon() {
   return `<svg

@@ -26,11 +26,9 @@ class Chips {
         this.currentChipsValues.push(newvalue);
       this.updateChips();
     };
-    const inputfield = createTextInput(clickhandler, addIcon(), "", true);
-    const inputLabel = CreateElementWithClass("span");
-    inputLabel.innerHTML = "Add folder name to skip list:";
+    const inputfield = createTextInputWithLabel("Add folder name to skip list:",clickhandler, addIcon(), "", true);
     chipscontainer.appendChildren([
-      inputLabel,
+      CreateDivWithClass("spacer"),
       inputfield,
       currentChipsContainer,
     ]);
