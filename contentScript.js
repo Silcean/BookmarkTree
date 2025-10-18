@@ -65,6 +65,7 @@ function init() {
     globalBookmarkTreeOptions = localOptions;
     setOptions(localOptions, false);
     initSettings(localOptions);
+    writeDividerValuesToDom(localOptions.dividerWidth)
     drawTree();
     return obj;
   });

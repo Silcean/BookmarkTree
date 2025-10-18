@@ -8,6 +8,7 @@ let defaultOptios = {
   skipFolders: [],
   favoriteFolderIdentifier: "Favorites",
   openedFolders: [],
+  dividerWidth: 66,
   colors: {
     background: "#48bf91",
     folderBackground: "#036952",
@@ -51,6 +52,9 @@ function consumeEnableTreeUpdate(enableTree) {
 function consumeOpenedFolders(folderNames) {
   globalBookmarkTreeOptions.openedFolders = folderNames;
 }
+function consumedividerWidth(width) {
+  globalBookmarkTreeOptions.dividerWidth = width;
+}
 
 function consumeOptionsUpdate(newOptions, allowTreeRedraw) {
   let shouldRerenderTree = false;
@@ -62,6 +66,7 @@ function consumeOptionsUpdate(newOptions, allowTreeRedraw) {
   executeIfValueHasBeenSet(newOptions.enableSearch, consumeSearchEnabledUpdate);
   executeIfValueHasBeenSet(newOptions.openedFolders, consumeOpenedFolders);
   executeIfValueHasBeenSet(newOptions.enableTree,consumeEnableTreeUpdate)
+  executeIfValueHasBeenSet(newOptions.dividerWidth,consumedividerWidth)
 
   shouldRerenderTree = executeIfValueHasBeenSet(newOptions.skipFolders,consumeSkipFoldersUpdate)
     ||executeIfValueHasBeenSet(newOptions.favoriteFolderIdentifier,consumeFavoriteUpdate)

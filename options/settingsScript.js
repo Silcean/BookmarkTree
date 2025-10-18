@@ -6,6 +6,8 @@ function toggleSettings() {
   } else {
     openSettings();
   }
+  document.body.classList.toggle("slider-disabled", settingsOpenState);
+
   settingsOpenState = !settingsOpenState;
 }
 
@@ -32,7 +34,7 @@ function initSettings(options) {
         false
       ),
     ]);
-    
+
   thoseChipsLikeTheFolderSkipList = new Chips(
     "skip-folder-chips",
     options.skipFolders,

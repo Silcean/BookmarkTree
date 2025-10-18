@@ -16,7 +16,7 @@
     <script src="/contentScript.js"></script>
   </head>
   <title>New Tab</title>
-  <body>
+  <body class="slider-disabled">
     <div id="layout-bm-and-search">
       <div id="search" class="large-text">
         <div>
@@ -48,6 +48,7 @@
       </div>
       <div id="bm"></div>
     </div>
+    <div id="layout-divider"></div>
     <div id="layout-favorites-container" class="large-text">
       <ul id="favoritesList"></ul>
     </div>
@@ -125,13 +126,6 @@
                   <span class="slider round"></span>
                 </label>
               </div>
-              <input
-                id="layout-ratio-slider"
-                type="range"
-                min="10"
-                max="90"
-                value="66"
-              />
               <h3>Remove Folder from Tree:</h3>
               <span
                 >Allows to exlude folders from search and the Tree-View. This
@@ -144,5 +138,6 @@
         </ul>
       </div>
     </div>
+    <script src="/components/sliderScript.js"></script>
   </body>
 </html>
