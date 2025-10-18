@@ -257,7 +257,7 @@ function drawFolder(obj, superthumbnaildiv, superdisplaydiv, depth) {
 
 function createDeleteButton(id) {
   const button = CreateElementWithClass("button", "icon-button");
-  button.onclick = () => removeBm(e.target.id);;
+  button.onclick = () => removeBm(id);;
   button.innerHTML=trashIcon();
   return button;
 }

@@ -68,7 +68,6 @@ class Chips {
 
   updateChips() {
     this.renderChips();
-    console.log(this.currentChipsValues);
     this.changeCallback(this.currentChipsValues);
   }
 

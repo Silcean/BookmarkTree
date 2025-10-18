@@ -1,5 +1,5 @@
 {
-  "name": "Visual Bookmark Tree",
+  "name": "Bookmark Tree",
   "description": "Adds a grafical gui to bookmarks in the newtab window",
   "version": "1.0",
   "manifest_version": 3,
@@ -9,5 +9,11 @@
   },
   "background": {
     "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "/css/iconWhite16.png",
+    "32": "/css/iconWhite32.png",
+    "48": "/css/iconWhite48.png",
+    "128": "/css/iconWhite128.png"
   }
 }

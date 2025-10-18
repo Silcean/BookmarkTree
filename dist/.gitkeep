@@ -1,0 +1,35 @@
+name: Build Extensions
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build extensions
+        run: |
+          chmod +x build.sh
+          ./build.sh
+
+      - name: Zip Chrome
+        run: |
+          cd dist/chrome
+          zip -r ../../chrome.zip .
+
+      - name: Zip Firefox
+        run: |
+          cd dist/firefox
+          zip -r ../../firefox.zip .
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension-builds
+          path: "*.zip"
