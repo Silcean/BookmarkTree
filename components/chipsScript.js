@@ -26,7 +26,7 @@ class Chips {
         this.currentChipsValues.push(newvalue);
       this.updateChips();
     };
-    const inputfield = createTextInput(clickhandler, addIcon(),"", true);
+    const inputfield = createTextInput(clickhandler, addIcon(), "", true);
     const inputLabel = CreateElementWithClass("span");
     inputLabel.innerHTML = "Add folder name to skip list:";
     chipscontainer.appendChildren([
@@ -35,7 +35,7 @@ class Chips {
       currentChipsContainer,
     ]);
     document.getElementById(this.containerId).appendChild(chipscontainer);
-    this.updateChips();
+    this.renderChips();
   }
 
   createSingleChip(name) {

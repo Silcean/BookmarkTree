@@ -34,35 +34,38 @@ function consumeFavoritesEnabledUpdate(isEnabled) {
 
 function consumeSkipFoldersUpdate(folderNames) {
   globalBookmarkTreeOptions.skipFolders = folderNames;
-  drawTree();
+  return true;
 }
 
 function consumeFavoriteUpdate(favoriteFolder) {
   globalBookmarkTreeOptions.favoriteFolderIdentifier = favoriteFolder;
-  drawTree();
+  return true;
 }
 
 function consumeOpenedFolders(folderNames) {
   globalBookmarkTreeOptions.openedFolders = folderNames;
 }
 
-function consumeOptionsUpdate(newOptions) {
-  if (newOptions.colors) consumeColorsUpdate(newOptions.colors);
-  if (
-    newOptions.enableFavorites != null ||
-    newOptions.enableFavorites != undefined
-  )
-    consumeFavoritesEnabledUpdate(newOptions.enableFavorites);
-  if (newOptions.enableSearch != null || newOptions.enableSearch != undefined)
-    consumeSearchEnabledUpdate(newOptions.enableSearch);
-  if (newOptions.skipFolders) consumeSkipFoldersUpdate(newOptions.skipFolders);
-  if (newOptions.favoriteFolderIdentifier)
-    consumeFavoriteUpdate(newOptions.favoriteFolderIdentifier);
-  if (newOptions.openedFolders) consumeOpenedFolders(newOptions.openedFolders);
-  //TODO make update for openedFolders
+function consumeOptionsUpdate(newOptions, allowTreeRedraw) {
+  let shouldRerenderTree = false;
+  executeIfValueHasBeenSet(newOptions.colors, consumeColorsUpdate);
+  executeIfValueHasBeenSet(
+    newOptions.enableFavorites,
+    consumeFavoritesEnabledUpdate
+  );
+  executeIfValueHasBeenSet(newOptions.enableSearch, consumeSearchEnabledUpdate);
+  executeIfValueHasBeenSet(newOptions.openedFolders, consumeOpenedFolders);
+
+  shouldRerenderTree = executeIfValueHasBeenSet(newOptions.skipFolders,consumeSkipFoldersUpdate)
+    ||executeIfValueHasBeenSet(newOptions.favoriteFolderIdentifier,consumeFavoriteUpdate)
+
+  if (shouldRerenderTree && allowTreeRedraw) drawTree();
   console.log("apply loaded options", newOptions);
 }
-
+function executeIfValueHasBeenSet(value, method) {
+  if (value != null || value != undefined) return method(value);
+  return false
+}
 function getOptions() {
   chrome.storage.sync.get("bookmark-tree-settings", function (obj) {
     globalBookmarkTreeOptions = obj["bookmark-tree-settings"];
@@ -72,8 +75,8 @@ function getOptions() {
   });
 }
 
-function setOptions(newOptions) {
-  consumeOptionsUpdate(newOptions);
+function setOptions(newOptions, allowTreeRedraw = true) {
+  consumeOptionsUpdate(newOptions, allowTreeRedraw);
   chrome.storage.sync.set({
     "bookmark-tree-settings": globalBookmarkTreeOptions,
   });

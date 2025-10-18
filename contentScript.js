@@ -52,8 +52,8 @@ function isFirstInit() {
 
 function init() {
   console.log("Initialising application");
-  ToggleSwitchListener("enableSearchInput","enableSearch");
-  ToggleSwitchListener("enableFavoritesInput","enableFavorites");
+  ToggleSwitchListener("enableSearchInput", "enableSearch");
+  ToggleSwitchListener("enableFavoritesInput", "enableFavorites");
   initSearch();
   chrome.storage.sync.get("bookmark-tree-settings", function (obj) {
     let localOptions;
@@ -63,7 +63,7 @@ function init() {
       localOptions = obj["bookmark-tree-settings"];
     }
     globalBookmarkTreeOptions = localOptions;
-    setOptions(localOptions);
+    setOptions(localOptions, false);
     initSettings(localOptions);
     drawTree();
     return obj;
@@ -268,6 +268,8 @@ function drawFavorites(inputFolder) {
   var sites = inputFolder.children;
   let list = document.getElementById("favoritesList");
   for (let i = 0; i < sites.length; i++) {
+    //filter folders
+    if (!sites[i].url) return;
     list.innerHTML +=
       "<li>" +
       '<a href="' +
@@ -294,7 +296,6 @@ function ToggleSwitchListener(switchId, optionsKey) {
     setOptions(empty);
   });
 }
-
 
 function setFavoritesEnabled(isEnabled) {
   document.getElementById("favoritesListContainer").style.display = isEnabled
