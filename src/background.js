@@ -6,16 +6,10 @@ chrome.runtime.onStartup.addListener(() => {
 });
 //respondes to request for the bookmark tree from tabs
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log(
-    "WORKER: Message from: " + sender.tab.id + "  " + JSON.stringify(request)
-  );
+
   if (request.message === "wantTreeUwU") {
     sendResponse(getTreeResonse(sender.tab.id));
   } else if (request.message === "isDefaultIcon") {
-    // (async () => {
-    //   const result = await DefaultIconHandler();
-    //   sendResponse(result);
-    // })();
     setTimeout(async () => {
       const result = await DefaultIconHandler(
         request.data.url,
@@ -64,14 +58,6 @@ function getTreeResonse(tabid) {
 }
 
 async function DefaultIconHandler(iconUrl, defaultBase64) {
-  // const cached = await chrome.storage.local.get(iconUrl);
-  // if (cached&&Object.keys(cached).length !== 0) {
-  //   if(cached[iconUrl]==true){
-  //     console.log(`Cache hit for ${iconUrl}:`,cached);
-  //        const isDefault =cached[iconUrl];
-  //   return { isDefault };
-  //   }
-  // }
   try {
     const [fetchedBuffer, defaultBuffer] = await Promise.all([
       getImageBuffer(iconUrl),
@@ -79,12 +65,6 @@ async function DefaultIconHandler(iconUrl, defaultBase64) {
     ]);
 
     const isDefault = compareBuffers(fetchedBuffer, defaultBuffer);
-    // if(isDefault){
-
-    //   chrome.storage.local.set({ [iconUrl]: true });
-    // }else{
-    //   chrome.storage.local.set({ [iconUrl]: false });
-    // }
     return { isDefault };
   } catch (error) {
     console.error("WORKER: icon compare error", error);
@@ -112,6 +92,7 @@ loadTree = async (firstload) => {
     }
   });
 };
+
 
 updateTree = async () => {
   tree = undefined;
@@ -176,12 +157,10 @@ async function getImageAsArrayBufferFirefox(url) {
 
     xhr.onload = function () {
       if (xhr.status === 200) {
-        console.log("xhr success for ", url);
         resolve(xhr.response);
       } else if (xhr.status === 404) {
         // This took me 4h for some reason firefox handles this differently than chrome.
         // This returns valid image. god lord knows why
-        console.log("xhr 404 success for ", url);
         resolve(xhr.response);
       } else {
         console.log("xhr error", xhr.response, url);

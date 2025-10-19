@@ -27,6 +27,11 @@ drawBookMarkLink = (containerType, obj, depth, shouldDrawTrashCan) => {
 let triedAttempt = 0;
 let maxAttempt = 5;
 async function startfallbackTrack(url, originalElement, fallbackElement) {
+  const earlyReturn = await checkNoDefaultForUrlInStorage(url);
+  if (earlyReturn) {
+    console.log("cache says ", url, " is no default image");
+    return;
+  }
   const newUrl = getFaviconUrl(url);
   const defaultString = getDefaultCompareString();
   // if (triedAttempt>maxAttempt) return;
@@ -47,8 +52,30 @@ async function startfallbackTrack(url, originalElement, fallbackElement) {
           originalElement.style.display = "none";
           fallbackElement.style.display = "unset";
         } else {
+          setNoDefautForUrlInStorage(url);
         }
       }
     }
   );
+}
+async function setNoDefautForUrlInStorage(url) {
+  const key = new URL(url).hostname;
+  await getStorageInterface().set({ [key]: true });
+}
+
+async function checkNoDefaultForUrlInStorage(url) {
+  const key = new URL(url).hostname;
+  const res = await getStorageInterface().get(key);
+  if (res != undefined && Object.keys(res).length != 0) return true;
+  return false;
+}
+
+function getStorageInterface() {
+  if (typeof browser !== "undefined") {
+    return browser.storage.local;
+  } else if (typeof chrome !== "undefined") {
+    return chrome.storage.local;
+  } else {
+    return browser.storage.local;
+  }
 }
