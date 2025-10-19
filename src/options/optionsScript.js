@@ -6,7 +6,7 @@ let defaultOptios = {
   enableFavorites: true,
   enableTree: true,
   skipFolders: [],
-  favoriteFolderIdentifier: "Favorites",
+  favoriteFolderIdentifier: "",
   openedFolders: [],
   dividerWidth: 66,
   colors: {

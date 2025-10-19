@@ -65,7 +65,7 @@ function init() {
     globalBookmarkTreeOptions = localOptions;
     setOptions(localOptions, false);
     initSettings(localOptions);
-    writeDividerValuesToDom(localOptions.dividerWidth)
+    writeDividerValuesToDom(localOptions.dividerWidth);
     drawTree();
     return obj;
   });
@@ -103,6 +103,12 @@ function drawTree() {
   bm.innerHTML = "";
   bm.appendChildren([thumbnaildiv, displaydiv, bmdiv]);
   recursiveDrawObj(tree, thumbnaildiv, displaydiv, bmdiv, depth);
+
+  let list = document.getElementById("favoritesList");
+  if (list.innerHTML == "") {
+    list.innerHTML =
+      "<li><div>No Favorites selected. Select a bookmarkfolder in settings to pin sites to quickaccess, or disable favorites in settings</div></li>";
+  }
 
   globalBookmarkTreeOptions.openedFolders.forEach((e) => {
     const foundElement = document.getElementById(e);
@@ -257,8 +263,8 @@ function drawFolder(obj, superthumbnaildiv, superdisplaydiv, depth) {
 
 function createDeleteButton(id) {
   const button = CreateElementWithClass("button", "icon-button");
-  button.onclick = () => removeBm(id);;
-  button.innerHTML=trashIcon();
+  button.onclick = () => removeBm(id);
+  button.innerHTML = trashIcon();
   return button;
 }
 

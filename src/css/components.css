@@ -84,6 +84,8 @@
   border-radius: 10px;
   width: 7.5em;
   height: 7.5em;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .thumbnail.active {
