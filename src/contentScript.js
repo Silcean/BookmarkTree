@@ -7,6 +7,8 @@ console.log("extension path=" + relpath);
 let tree;
 let currentlyActive = [];
 
+let favoritesListContainer;
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.giveTreeUwU != undefined) {
     var localtree = request.giveTreeUwU[0];
@@ -51,6 +53,7 @@ function isFirstInit() {
 
 function init() {
   console.log("Initialising application");
+  favoritesListContainer = document.getElementById("favoritesList");
   ToggleSwitchListener("enableSearchInput", "enableSearch");
   ToggleSwitchListener("enableFavoritesInput", "enableFavorites");
   ToggleSwitchListener("enableBookmarkTreeInput", "enableTree");
@@ -58,7 +61,7 @@ function init() {
   chrome.storage.sync.get("bookmark-tree-settings", function (obj) {
     let localOptions;
     if (!obj || Object.keys(obj).length === 0) {
-      localOptions = defaultOptios;
+      localOptions = defaultOptions;
     } else {
       localOptions = obj["bookmark-tree-settings"];
     }
@@ -104,9 +107,8 @@ function drawTree() {
   bm.appendChildren([thumbnaildiv, displaydiv, bmdiv]);
   recursiveDrawObj(tree, thumbnaildiv, displaydiv, bmdiv, depth);
 
-  let list = document.getElementById("favoritesList");
-  if (list.innerHTML == "") {
-    list.innerHTML =
+  if (favoritesListContainer.innerHTML == "") {
+    favoritesListContainer.innerHTML =
       "<li><div>No Favorites selected. Select a bookmarkfolder in settings to pin sites to quickaccess, or disable favorites in settings</div></li>";
   }
 
@@ -255,6 +257,10 @@ function drawFolder(obj, superthumbnaildiv, superdisplaydiv, depth) {
   content.appendChildren([thumbnaildiv, displaydiv, bmdiv]);
   //add children
   obj.children.forEach((e) => {
+    if (globalBookmarkTreeOptions.skipFolders.indexOf(e.title) != -1) {
+      return;
+    }
+
     recursiveDrawObj(e, thumbnaildiv, displaydiv, bmdiv, depth);
   });
   superdisplaydiv.appendChild(contentcontainer);
@@ -270,11 +276,10 @@ function createDeleteButton(id) {
 
 function drawFavorites(inputFolder) {
   var sites = inputFolder.children;
-  let list = document.getElementById("favoritesList");
   for (let i = 0; i < sites.length; i++) {
     //filter folders
     if (!sites[i].url) return;
-    list.innerHTML +=
+    favoritesListContainer.innerHTML +=
       "<li>" +
       '<a href="' +
       sites[i].url +
@@ -288,8 +293,7 @@ function drawFavorites(inputFolder) {
 }
 
 function clearFavorites() {
-  let list = document.getElementById("favoritesList");
-  list.innerHTML = "";
+  favoritesListContainer.innerHTML = "";
 }
 
 function ToggleSwitchListener(switchId, optionsKey) {

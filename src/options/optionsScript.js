@@ -1,7 +1,7 @@
 /* #region Initial Variables */
 console.log("init options");
 let globalBookmarkTreeOptions = {};
-let defaultOptios = {
+let defaultOptions = {
   enableSearch: true,
   enableFavorites: true,
   enableTree: true,

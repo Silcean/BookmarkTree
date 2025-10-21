@@ -2,7 +2,7 @@ class Chips {
   currentChipsValues = [];
   containerId = "";
   changeCallback = (folderNames) => {
-    console.log("Cips call updated ", folderNames);
+    console.log("Chips call updated ", folderNames);
   };
   constructor(containerId, strings, changeCallback) {
     this.containerId = containerId;

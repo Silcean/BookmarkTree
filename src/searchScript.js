@@ -1,14 +1,20 @@
 function setSearchEnabled(isEnabled) {
-  const element = document.getElementById("search");
-  document.getElementById("search").style = !isEnabled
-    ? "display: none;"
-    : "";
+  searchParentContainer.style = !isEnabled ? "display: none;" : "";
   SetToggleSwitchValue("enableSearchInput", isEnabled);
 }
+let searchParentContainer;
+let searchInputField;
+let searchClearButton;
+let searchExecuteButton;
 
 function initSearch() {
+  searchParentContainer = document.getElementById("search");
+  searchInputField = document.getElementById("searchinput");
+  searchClearButton = document.getElementById("clearbutton");
+  searchExecuteButton = document.getElementById("search-execute-button");
+
   executeSearch = () => {
-    clear();
+    searchResultList.innerHTML = "";
     term = searchinput.value.trim();
     if (term != "") {
       searchrecurse(tree, term);
@@ -16,6 +22,7 @@ function initSearch() {
   };
   clear = () => {
     searchResultList.innerHTML = "";
+    searchInputField.value = "";
   };
 
   onEnter = (event) => {
@@ -26,9 +33,9 @@ function initSearch() {
   };
 
   //#endregion
-  document.getElementById("searchinput").onkeydown = onEnter;
-  document.getElementById("clearbutton").onclick = clear;
-  document.getElementById("search-execute-button").onclick = executeSearch;
+  searchInputField.onkeydown = onEnter;
+  searchClearButton.onclick = clear;
+  searchExecuteButton.onclick = executeSearch;
 }
 async function searchrecurse(node, term) {
   if (node != null && node.url != undefined) {

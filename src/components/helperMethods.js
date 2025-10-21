@@ -50,16 +50,12 @@ function getLinkToBookmarkClass(id) {
 }
 
 function setRootCssVariable(variable, value) {
-  document.documentElement.style.setProperty(variable,value);
+  const root = document.querySelector(":root");
+  root.style.setProperty(variable, value);
 }
-
 function setSettingsVariable(value) {
-  document.documentElement.setAttribute(
-    "style",
-    `${settingsElementVariable}: ${value}`
-  );
+  setRootCssVariable(settingsElementVariable, value);
 }
-
 function debounce(fn, delay = 200) {
   let t;
   return (...args) => {

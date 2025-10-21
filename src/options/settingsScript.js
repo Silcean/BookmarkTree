@@ -1,5 +1,5 @@
 let settingsOpenState = false;
-let thoseChipsLikeTheFolderSkipList;
+let folderSkipChips;
 function toggleSettings() {
   if (settingsOpenState) {
     closeSettings();
@@ -35,11 +35,15 @@ function initSettings(options) {
       ),
     ]);
 
-  thoseChipsLikeTheFolderSkipList = new Chips(
+  folderSkipChips = new Chips(
     "skip-folder-chips",
     options.skipFolders,
     updateSettingsFromFolderSkips
   );
+  document.getElementById("resetSettingsToDefault").onclick = () => {
+    setOptions(defaultOptions);
+    applyColorsToInputs(defaultOptions);
+  };
 }
 
 function updateSettingsFromFolderSkips(names) {
