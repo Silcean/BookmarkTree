@@ -25,6 +25,7 @@ HTMLElement.prototype.appendChildren = function (children) {
       throw new Error("All items in array must be HTMLElements");
     }
   });
+  return this;
 };
 
 HTMLElement.prototype.createChildDivWithClass = function (className) {
@@ -45,7 +46,7 @@ function getDisplayFolderContentId(id) {
   return "inside-" + id;
 }
 
-function getLinkToBookmarkClass(id) {
+function getLinkToBookmarkId(id) {
   return "link-to-bm-" + id;
 }
 

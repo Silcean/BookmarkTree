@@ -16,7 +16,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         request.data.defaultIconString
       );
       if (result)
-        console.log("WORKER: Found default image for url:", request.data.url);
+        // console.log("WORKER: Found default image for url:", request.data.url);
       sendResponse(result);
     });
     // Important! Return true to indicate you want to send a response asynchronously
@@ -141,7 +141,7 @@ function getImageBuffer(url) {
 }
 
 async function getImageBufferChrome(url) {
-  console.log("attempting to fetch", url);
+  // console.log("attempting to fetch", url);
   const response = await fetch(url);
   if (!response.ok)
     throw new Error("Failed to fetch image: " + response.statusText);

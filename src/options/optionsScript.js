@@ -14,7 +14,10 @@ let defaultOptions = {
     folderBackground: "#036952",
     folderBackgroundActivated: "#004b3a",
     folderTextColor: "#97b4ad",
-    textColor: "black",
+    textColor:  "#000000ff",
+    overlayBackground: "#ffffff",
+    accentBackground: "#c3c2c2",
+    accentText: "#000000ff"
   },
 };
 

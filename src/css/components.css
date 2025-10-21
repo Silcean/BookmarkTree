@@ -1,12 +1,12 @@
-:root{
-  --icon-button-size:24px
+:root {
+  --icon-button-size: 24px;
 }
 /*#region Bookmark Line Element*/
 .bookmark-line-element {
-  --transition-duration:0.2s;
-  --transition-easing:ease-out;
-  --bookmark-line-height:40px;
-  --icon-button-size:30px;
+  --transition-duration: 0.2s;
+  --transition-easing: ease-out;
+  --bookmark-line-height: 40px;
+  --icon-button-size: 30px;
   color: var(--default-text-color);
   height: var(--bookmark-line-height);
   display: flex;
@@ -26,13 +26,12 @@
   flex: 1;
 }
 
-
 .bookmark-line-element > a > span {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 90%;
-  transition: font-size var( --transition-duration) var( --transition-easing);
+  transition: font-size var(--transition-duration) var(--transition-easing);
 }
 
 .bookmark-line-element > a:hover > span {
@@ -44,13 +43,13 @@
   margin-right: 10px;
   position: relative;
   width: 25px;
-  transition: transform var(--transition-duration) var( --transition-easing);
+  transition: transform var(--transition-duration) var(--transition-easing);
 }
 
 .bookmark-line-element > a:hover > .bookmark-line-element-favicon {
   transform: scale(1.2) rotate(20deg);
 }
-.bookmark-line-element > button{
+.bookmark-line-element > button {
   height: var(--bookmark-line-height);
 }
 .bookmark-line-favicon {
@@ -153,7 +152,8 @@
   padding-left: 4px;
   width: fit-content;
   border-radius: 100px;
-  background-color: var(--overlay-container-accent-color);
+  background-color: var(--accent-background-color);
+  color: var(--accent-text-color);
 }
 
 .single-chip > span {
@@ -269,7 +269,8 @@ input:checked + .slider:before {
   width: fit-content;
   border: none;
   border-radius: 50px;
-  background-color: var(--overlay-container-accent-color);
+  color: var(--accent-text-color);
+  background-color: var(--accent-background-color);
   padding: 5px;
 }
 /*#endregion Custom text input*/
@@ -279,15 +280,18 @@ input:checked + .slider:before {
 .raised-text-icon-button {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.5rem;
   padding: 5px;
   margin: 5px;
   margin-left: 2px;
   text-align: center;
   text-decoration: none;
-  background-color: var(--raised-button-background);
+  color: var(--accent-text-color);
+  background-color: var(--accent-background-color);
   border: 2px solid rgb(70, 70, 70);
   border-radius: 15px;
+  color: var(--default-text-color);
 }
 
 .raised-text-icon-button > svg {
@@ -299,6 +303,7 @@ input:checked + .slider:before {
 .raised-text-icon-button:hover {
   background-color: rgba(185, 185, 185, 0.616);
 }
+
 .raised-text-icon-button:active {
   background-color: rgba(160, 160, 160, 0.616);
 }
@@ -312,7 +317,8 @@ input:checked + .slider:before {
   color: none;
   text-align: center;
   text-decoration: none;
-  background-color: rgba(245, 245, 245, 0.616);
+  color: var(--accent-text-color);
+  background-color: var(--accent-background-color);
   border: 2px solid rgb(70, 70, 70);
   border-radius: 15px;
 }
@@ -334,7 +340,7 @@ input:checked + .slider:before {
 }
 .icon-button > svg {
   height: var(--icon-button-size);
-  width: var(--icon-button-size);;
+  width: var(--icon-button-size);
   padding: 5px;
   fill: var(--default-text-color);
 }

@@ -5,11 +5,11 @@
   --folder-text-color: rgba(245, 245, 245, 0.616);
   --divider-line-color: rgba(245, 245, 245, 0.616);
   --default-text-color: black;
-  --display-setting-element: none;
+  --overlay-container-color: #ffffff;
+  --accent-background-color: #c3c2c2;
+  --accent-text-color: #000000;
   --color-selector-bubble-size: 24px;
-  --overlay-container-color: honeydew;
-  --overlay-container-accent-color: #97b4ad;
-  --raised-button-background: rgba(245, 245, 245, 0.616);
+  --display-setting-element: none;
 }
 
 a,
@@ -49,6 +49,7 @@ body {
   display: flex;
   align-items: center;
 }
+
 /* Drag Divider */
 #layout-divider {
   position: absolute;
@@ -58,7 +59,6 @@ body {
   height: 100%;
   background: rgba(0, 0, 0, 0.1);
   cursor: ew-resize;
-  z-index: 10;
 }
 
 #layout-divider:hover {
@@ -68,6 +68,7 @@ body {
 body.favorites-disabled #layout-favorites-container {
   width: 0% !important;
 }
+
 body.favorites-disabled #layout-divider {
   display: none;
 }
@@ -75,19 +76,23 @@ body.favorites-disabled #layout-divider {
 body.favorites-disabled #layout-bm-and-search {
   width: 100% !important;
 }
+
 body.slider-disabled #layout-divider {
   width: 100% !important;
   display: none;
   width: 0% !important;
 }
+
 body.is-dragging {
   user-select: none;
   cursor: ew-resize;
 }
+
 body.bookmark-disabled #layout-divider {
   display: none;
   width: 0% !important;
 }
+
 body.bookmark-disabled #layout-favorites-container {
   width: 100% !important;
 }
@@ -114,11 +119,27 @@ body::-webkit-scrollbar {
   width: 27px;
 }
 
-ul li {
-  margin: 5px 5px;
-}
 ul {
   list-style-type: none;
+  padding-inline-start: 5px;
+}
+
+#favoritesList > li{
+ margin:5px ;
+ color:var(--default-text-color)
+}
+
+#searchResultList {
+  box-sizing: border-box;
+}
+
+#settings-list {
+  box-sizing: border-box;
+  margin: 10px;
+  padding-right: 1em;
+  max-height: 80vh;
+  overflow-y: auto;
+  color: var(--default-text-color);
 }
 
 .imgtile {
@@ -126,7 +147,7 @@ ul {
   width: 40px;
   height: 40px;
   display: inline-block;
-  background-color: black;
+  background-color: var(--default-text-color);
 }
 
 .contentcontainer > .line {
@@ -176,7 +197,7 @@ Search css
   padding: 5px;
   color: none;
   text-decoration: none;
-  background-color: rgba(245, 245, 245, 0.616);
+  background-color: var(--accent-background-color);
   border: 2px solid rgb(70, 70, 70);
   border-radius: 15px;
   font-family: "Fira Code";
@@ -194,6 +215,8 @@ Search css
   border-radius: 15px;
   margin-top: 5px;
   margin-bottom: 5px;
+  z-index: 100;
+  position: absolute;
 }
 
 #search > div > button > svg {
@@ -215,7 +238,14 @@ Settings css
 #settingsContainer {
   top: 15px;
   right: 15px;
-  position: absolute;
+  position: fixed;
+}
+
+#settingsList {
+  padding-right: 1em;
+  opacity: 1;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 .settings-display-element {
   display: var(--display-setting-element);
@@ -250,4 +280,11 @@ Settings css
 
 .spacer {
   height: 1em;
+}
+
+.drag-anchor{
+  display: var(--display-setting-element);
+  position: absolute;
+  top:5px;
+  left:1em;
 }

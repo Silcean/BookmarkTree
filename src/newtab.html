@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
     <link href="/css/newtab.css" rel="stylesheet" />
     <link href="/css/components.css" rel="stylesheet" />
     <link href="/css/fira_code.css" rel="stylesheet" />
@@ -44,12 +45,13 @@
             </svg>
           </button>
         </div>
-        <ul id="searchResultList" class="overlay-container"></ul>
+          <ul id="searchResultList" class="overlay-container"></ul>
       </div>
       <div id="bm"></div>
     </div>
     <div id="layout-divider"></div>
     <div id="layout-favorites-container" class="large-text">
+      <div class="drag-anchor"><span>⬅ Drag me</span></div>
       <ul id="favoritesList"></ul>
     </div>
     <div id="settingsContainer">
@@ -64,8 +66,8 @@
           />
         </svg>
       </button>
-      <div class="settings-display-element settings-dialog">
-        <ul id="settings-list" class="overlay-container">
+      <div class="settings-display-element settings-dialog overlay-container">
+        <ul id="settings-list">
           <li style="padding-top: 1px">
             <h2>Colors:</h2>
             <div
@@ -134,6 +136,16 @@
               >
               <div id="skip-folder-chips"></div>
             </div>
+          </li>
+          <li>
+            <button id="resetSettingsToDefault" style="width: 100%; margin-left: 1em;" class="raised-text-icon-button">
+              <span>Reset Settings to default</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                <path
+                  d="M280-200v-80h284q63 0 109.5-40T720-420q0-60-46.5-100T564-560H312l104 104-56 56-200-200 200-200 56 56-104 104h252q97 0 166.5 63T800-420q0 94-69.5 157T564-200H280Z"
+                />
+              </svg>
+            </button>
           </li>
         </ul>
       </div>

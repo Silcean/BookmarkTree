@@ -2,10 +2,8 @@ drawBookMarkLink = (containerType, obj, depth, shouldDrawTrashCan) => {
   if (!obj) return;
   var container = CreateElementWithClass(
     containerType,
-    "bookmark-line-element " +
-      getLinkToBookmarkClass(obj.id) +
-      " " +
-      getDepthClass(depth)
+    "bookmark-line-element " + getDepthClass(depth),
+    getLinkToBookmarkId(obj.id)
   );
 
   var titlespan = document.createElement("span");
@@ -29,7 +27,7 @@ let maxAttempt = 5;
 async function startfallbackTrack(url, originalElement, fallbackElement) {
   const earlyReturn = await checkNoDefaultForUrlInStorage(url);
   if (earlyReturn) {
-    console.log("cache says ", url, " is no default image");
+    // console.log("cache says ", url, " is no default image");
     return;
   }
   const newUrl = getFaviconUrl(url);

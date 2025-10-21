@@ -74,11 +74,10 @@ function init() {
   });
 }
 
-function removeBm(trashid) {
-  let bmid = trashid.substring("remove".length, trashid.length);
+function removeBm(bmid) {
   console.log("remove", bmid);
   try {
-    let id = document.getElementById(bmid);
+    let id = document.getElementById(getLinkToBookmarkId(bmid));
     id.style.display = "none";
   } catch (error) {}
   chrome.runtime.sendMessage({ deleteBm: bmid });
@@ -260,7 +259,6 @@ function drawFolder(obj, superthumbnaildiv, superdisplaydiv, depth) {
     if (globalBookmarkTreeOptions.skipFolders.indexOf(e.title) != -1) {
       return;
     }
-
     recursiveDrawObj(e, thumbnaildiv, displaydiv, bmdiv, depth);
   });
   superdisplaydiv.appendChild(contentcontainer);

@@ -42,6 +42,7 @@ function setTransitionEnabled(enabled) {
 
 function setSettingsWindowsTransparency(isTransparent){
   settlingsList.style.opacity=isTransparent?0.5:1
+  settlingsList.parentNode.style.opacity=isTransparent?0.5:1
 }
 const saveLayoutWidth = debounce((widthPercent) => {
   console.log("saving width percentage");

@@ -1,36 +1,61 @@
+const ColorPickers = [
+  {
+    label: "Background Color: ",
+    domId: "colorpicker-settings-complete-background",
+    optionsKey: "background",
+    cssVariable: "--bg-color",
+  },
+  {
+    label: "Text Color: ",
+    domId: "colorpicker-settings-color-text",
+    optionsKey: "textColor",
+    cssVariable: "--default-text-color",
+  },
+  {
+    label: "Accent Color: ",
+    domId: "colorpicker-settings-color-accent",
+    optionsKey: "accentBackground",
+    cssVariable: "--accent-background-color",
+  },  {
+    label: "Accent Text Color: ",
+    domId: "colorpicker-settings-color-text-accent",
+    optionsKey: "accentText",
+    cssVariable: "--accent-text-color",
+  },
+  {
+    label: "Folder Color: ",
+    domId: "colorpicker-settings-color-folder",
+    optionsKey: "folderBackground",
+    cssVariable: "--folder-color",
+  },
+  {
+    label: "Active Folder Color: ",
+    domId: "colorpicker-settings-color-active-folder",
+    optionsKey: "folderBackgroundActivated",
+    cssVariable: "--folder-open-color",
+  },
+  {
+    label: "Folder Text Color: ",
+    domId: "colorpicker-settings-color-text-folder",
+    optionsKey: "folderTextColor",
+    cssVariable: "--folder-text-color",
+  },
+  {
+    label: "Pop Up Background Color: ",
+    domId: "colorpicker-settings-color-overlay",
+    optionsKey: "overlayBackground",
+    cssVariable: "--overlay-container-color",
+  },
+];
 
 function colorSettings(options) {
   const colorbuttons = CreateElementWithClass("li");
-  colorbuttons.appendChildren([createColorSettingsApplyButton(), createColorSettingsResetButton()]);
+  colorbuttons.appendChildren([
+    createColorSettingsApplyButton(),
+    createColorSettingsResetButton(),
+  ]);
   colorbuttons.style = "display: flex; margin: 0px;";
-  return [
-    addColorPicker(
-      "Background Color: ",
-      "settings-color-background",
-      "background",
-      options
-    ),
-    addColorPicker(
-      "Folder Color: ",
-      "settings-color-folder",
-      "folder-background",
-      options
-    ),
-    addColorPicker(
-      "Active Folder Color: ",
-      "settings-color-active-folder",
-      "folder-background-active",
-      options
-    ),
-    addColorPicker(
-      "Folder Text Color: ",
-      "settings-color-text-folder",
-      "folder-text",
-      options
-    ),
-    addColorPicker("Text Color: ", "settings-color-text", "text", options),
-    colorbuttons,
-  ];
+  return [...ColorPickers.map((x) => addColorPicker(x, options)), colorbuttons];
 }
 
 function watchColorPicker() {
@@ -39,124 +64,100 @@ function watchColorPicker() {
   });
 }
 
-function getDefaultColor(type, options) {
-  switch (type) {
-    case "background":
-      return options.colors.background;
-    case "folder-background":
-      return options.colors.folderBackground;
-    case "folder-background-active":
-      return options.colors.folderBackgroundActivated;
-    case "folder-text":
-      return options.colors.folderTextColor;
-    default:
-    case "text":
-      return options.colors.textColor;
-  }
-}
+function addColorPicker(colorPickerObject, options) {
+  //object strucutre. got i miss typescript
+  // {
+  //   label: "Background Color: ",
+  //   domId: "settings-color-folder",
+  //   optionsKey: "background",
+  //   cssVariable: "--bg-color",
+  // }
 
-function addColorPicker(title, id, type, options) {
   const listElement = CreateElementWithClass("li", "color-setting");
   listElement.style = "display: flex; align-items: center; gap: 0.5rem;";
-  const picker = createColorPicker("colorpicker-" + id, type, options);
+
   const titleSpan = CreateElementWithClass("span");
   titleSpan.style = "white-space:nowrap";
-  titleSpan.innerHTML = title;
-  const containter = CreateElementWithClass("div", "right-group");
-  containter.appendChildren([picker]);
-  listElement.appendChildren([titleSpan, containter]);
+  titleSpan.innerHTML = colorPickerObject.label;
+
+  const picker = createColorPickerElement(colorPickerObject, options);
+  listElement.appendChildren([
+    titleSpan,
+    CreateElementWithClass("div", "right-group").appendChildren([picker]),
+  ]);
   return listElement;
 }
 
-function createColorPicker(id, type, options) {
+function createColorPickerElement(colorPickerObject, options) {
   const picker = document.createElement("input");
   picker.type = "color";
-  picker.id = id;
-  console.log("def color", getDefaultColor(type, options));
-  picker.value = getDefaultColor(type, options);
+  picker.id = colorPickerObject.domId;
+  picker.value = options.colors[colorPickerObject.optionsKey];
   picker.addEventListener("input", () => watchColorPicker());
-  const colorPickerWrapper = CreateElementWithClass("label", "color-bubble");
-  colorPickerWrapper.appendChildren([picker]);
-  return colorPickerWrapper;
+
+  return CreateElementWithClass("label", "color-bubble").appendChildren([
+    picker,
+  ]);
 }
 
 function createColorSettingsResetButton() {
-  const resetButton = CreateElementWithClass(
-    "button",
-    "raised-text-icon-button"
-  );
-  resetButton.innerHTML = `<span>Reset Colors</span>` + resetIcon();
-  resetButton.style = "flex-grow: 1;";
-
-  resetButton.onclick = () => {
+  return createRaisedButton(`<span>Reset Colors</span>` + resetIcon(), () => {
     applyColorsToCss(globalBookmarkTreeOptions);
     applyColorsToInputs(globalBookmarkTreeOptions);
-  };
-  return resetButton;
+  });
+  // const resetButton = CreateElementWithClass(
+  //   "button",
+  //   "raised-text-icon-button"
+  // );
+  // resetButton.innerHTML = `<span>Reset Colors</span>` + resetIcon();
+  // resetButton.style = "flex-grow: 1;";
+
+  // resetButton.onclick = () => {
+  //   applyColorsToCss(globalBookmarkTreeOptions);
+  //   applyColorsToInputs(globalBookmarkTreeOptions);
+  // };
+  // return resetButton;
 }
 
 function createColorSettingsApplyButton() {
-  const applyButton = CreateElementWithClass(
-    "button",
-    "raised-text-icon-button"
-  );
-  applyButton.innerHTML = `<span>Apply Colors</span>` + colorIcon();
-  applyButton.style = "flex-grow: 1;";
-  applyButton.onclick = () => {
-    setOptions({colors:getColorsFromInputs()})
-  };
-  return applyButton;
+  return createRaisedButton(`<span>Apply Colors</span>` + colorIcon(), () => {
+    setOptions({ colors: getColorsFromInputs() });
+  });
+  // const applyButton = CreateElementWithClass(
+  //   "button",
+  //   "raised-text-icon-button"
+  // );
+  // applyButton.innerHTML = `<span>Apply Colors</span>` + colorIcon();
+  // applyButton.style = "flex-grow: 1;";
+  // applyButton.onclick = () => {
+  //   setOptions({ colors: getColorsFromInputs() });
+  // };
+  // return applyButton;
 }
-
 
 function getColorPickerValue(id) {
   return document.getElementById(id).value;
 }
 
 function applyColorsToCss(options) {
-  setRootCssVariable("--bg-color", options.colors.background);
-  setRootCssVariable("--folder-color", options.colors.folderBackground);
-  setRootCssVariable(
-    "--folder-open-color",
-    options.colors.folderBackgroundActivated
+  ColorPickers.forEach((x) =>
+    setRootCssVariable(x.cssVariable, options.colors[x.optionsKey])
   );
-  setRootCssVariable("--folder-text-color", options.colors.folderTextColor);
-  setRootCssVariable("--default-text-color", options.colors.textColor);
 }
 
 function applyColorsToInputs(options) {
   function setValueById(id, value) {
     document.getElementById(id).value = value;
   }
-  setValueById(
-    "colorpicker-settings-color-folder",
-    options.colors.folderBackground
+  ColorPickers.forEach((x) =>
+    setValueById(getColorPickerValue(x.domId), options.colors[x.optionsKey])
   );
-  setValueById(
-    "colorpicker-settings-color-active-folder",
-    options.colors.folderBackgroundActivated
-  );
-  setValueById(
-    "colorpicker-settings-color-text-folder",
-    options.colors.folderTextColor
-  );
-  setValueById(
-    "colorpicker-settings-color-background",
-    options.colors.background
-  );
-  setValueById("colorpicker-settings-color-text", options.colors.textColor);
 }
 
 function getColorsFromInputs() {
-  return {
-    folderBackground: getColorPickerValue("colorpicker-settings-color-folder"),
-    folderBackgroundActivated: getColorPickerValue(
-      "colorpicker-settings-color-active-folder"
-    ),
-    folderTextColor: getColorPickerValue(
-      "colorpicker-settings-color-text-folder"
-    ),
-    background: getColorPickerValue("colorpicker-settings-color-background"),
-    textColor: getColorPickerValue("colorpicker-settings-color-text"),
-  };
+  let colorsObject = {};
+  ColorPickers.map(
+    (x) => (colorsObject[x.optionsKey] = getColorPickerValue(x.domId))
+  );
+  return colorsObject;
 }

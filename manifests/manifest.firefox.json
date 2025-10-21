@@ -26,10 +26,10 @@
     "scripts": ["background.js"]
   },
   "icons": {
-    "16": "/css/iconWhite16.png",
-    "32": "/css/iconWhite32.png",
-    "48": "/css/iconWhite48.png",
-    "128": "/css/iconWhite128.png"
+    "16": "/icons/iconWhite16.png",
+    "32": "/icons/iconWhite32.png",
+    "48": "/icons/iconWhite48.png",
+    "128": "/icons/iconWhite128.png"
   },
   "browser_specific_settings": {
     "gecko": {

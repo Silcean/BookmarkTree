@@ -53,3 +53,14 @@ function createTextInputWithLabel(
   //create input field with enter button
   return container;
 }
+
+function createRaisedButton(innerHTML,onClick){
+  const raisedButton = CreateElementWithClass(
+    "button",
+    "raised-text-icon-button"
+  );
+  raisedButton.innerHTML = innerHTML;
+  raisedButton.style = "flex-grow: 1;";
+  raisedButton.onclick = onClick;
+  return raisedButton;
+}
