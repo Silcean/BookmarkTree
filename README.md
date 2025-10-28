@@ -28,6 +28,8 @@ Planned Features:
   - Short Term
     - Rename bookmarks in this view
     - Immediate updates when a new bookmark/folders has been added/deleted/moved
+    - Performance improvements on image load on firefox
+      - This would be done immediately if they implemented the extension favicon API. 
   - Long Term
     - Drag and drop to sort bookmarks
 

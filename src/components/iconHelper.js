@@ -42,7 +42,7 @@ function getFavIconFirefox(urlString) {
   // const url = new URL(
   //   `https://icon.horse/icon/` + encodeURIComponent(new URL(urlString).hostname)
   // );
-  const baseurl = new URL(urlString).hostname;
+  const baseurl = new URL(urlString).origin;
   const url = new URL(
     `https://www.google.com/s2/favicons?domain=${encodeURIComponent(
       baseurl

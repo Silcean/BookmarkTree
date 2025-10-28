@@ -150,7 +150,7 @@ function applyColorsToInputs(options) {
     document.getElementById(id).value = value;
   }
   ColorPickers.forEach((x) =>
-    setValueById(getColorPickerValue(x.domId), options.colors[x.optionsKey])
+    setValueById(x.domId, options.colors[x.optionsKey])
   );
 }
 

@@ -64,6 +64,7 @@ body {
 #layout-divider:hover {
   background: rgba(0, 0, 0, 0.3);
 }
+/* #region favorites are disabled*/
 
 body.favorites-disabled #layout-favorites-container {
   width: 0% !important;
@@ -77,6 +78,11 @@ body.favorites-disabled #layout-bm-and-search {
   width: 100% !important;
 }
 
+body.favorites-disabled .layout-divider-drag-anchor {
+  display: none;
+}
+/* #endregion favorites are disabled*/
+
 body.slider-disabled #layout-divider {
   width: 100% !important;
   display: none;
@@ -87,6 +93,7 @@ body.is-dragging {
   user-select: none;
   cursor: ew-resize;
 }
+/* #region bookmarks are disabled*/
 
 body.bookmark-disabled #layout-divider {
   display: none;
@@ -101,6 +108,11 @@ body.bookmark-disabled #layout-bm-and-search {
   width: 0% !important;
   visibility: hidden;
 }
+
+body.bookmark-disabled .layout-divider-drag-anchor {
+  display: none;
+}
+/* #endregion bookmarks are disabled*/
 
 /* Hide scrollbar for chrome, Safari and Opera */
 /* 
@@ -124,9 +136,9 @@ ul {
   padding-inline-start: 5px;
 }
 
-#favoritesList > li{
- margin:5px ;
- color:var(--default-text-color)
+#favoritesList > li {
+  margin: 5px;
+  color: var(--default-text-color);
 }
 
 #searchResultList {
@@ -275,16 +287,16 @@ Settings css
 }
 
 .inset-settings {
-  margin-left: 1em;
+  padding-left: 1em;
 }
 
 .spacer {
   height: 1em;
 }
 
-.drag-anchor{
+.layout-divider-drag-anchor {
   display: var(--display-setting-element);
   position: absolute;
-  top:5px;
-  left:1em;
+  top: 5px;
+  left: 1em;
 }

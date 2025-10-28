@@ -9,6 +9,7 @@ let defaultOptions = {
   favoriteFolderIdentifier: "",
   openedFolders: [],
   dividerWidth: 66,
+  useDefaultImageDetectionCache:true,
   colors: {
     background: "#48bf91",
     folderBackground: "#036952",

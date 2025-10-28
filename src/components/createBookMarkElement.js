@@ -22,18 +22,18 @@ drawBookMarkLink = (containerType, obj, depth, shouldDrawTrashCan) => {
   if (shouldDrawTrashCan) container.appendChild(createDeleteButton(obj.id));
   return container;
 };
-let triedAttempt = 0;
-let maxAttempt = 5;
+
 async function startfallbackTrack(url, originalElement, fallbackElement) {
-  const earlyReturn = await checkNoDefaultForUrlInStorage(url);
-  if (earlyReturn) {
-    // console.log("cache says ", url, " is no default image");
-    return;
+  if (globalBookmarkTreeOptions.useDefaultImageDetectionCache) {
+    const earlyReturn = await checkNoDefaultForUrlInStorage(url);
+    if (earlyReturn) {
+      // console.log("cache says ", url, " is no default image");
+      return;
+    }
   }
+
   const newUrl = getFaviconUrl(url);
   const defaultString = getDefaultCompareString();
-  // if (triedAttempt>maxAttempt) return;
-  triedAttempt++;
   chrome.runtime.sendMessage(
     {
       message: "isDefaultIcon",
@@ -50,7 +50,9 @@ async function startfallbackTrack(url, originalElement, fallbackElement) {
           originalElement.style.display = "none";
           fallbackElement.style.display = "unset";
         } else {
-          setNoDefautForUrlInStorage(url);
+          if (globalBookmarkTreeOptions.useDefaultImageDetectionCache) {
+            setNoDefautForUrlInStorage(url);
+          }
         }
       }
     }
