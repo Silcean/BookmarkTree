@@ -16,7 +16,7 @@ jobs:
       - name: Build extensions
         run: |
           chmod +x buildScript.sh
-          buildScript.sh
+          ./buildScript.sh
 
       - name: Zip Chrome
         run: |
