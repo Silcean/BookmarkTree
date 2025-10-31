@@ -7,7 +7,7 @@ drawBookMarkLink = (containerType, obj, depth, shouldDrawTrashCan) => {
   );
 
   var titlespan = document.createElement("span");
-  titlespan.innerHTML += obj.title;
+  titlespan.textContent += obj.title;
 
   let a = document.createElement("a");
   a.href = obj.url;

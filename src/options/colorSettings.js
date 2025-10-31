@@ -78,7 +78,7 @@ function addColorPicker(colorPickerObject, options) {
 
   const titleSpan = CreateElementWithClass("span");
   titleSpan.style = "white-space:nowrap";
-  titleSpan.innerHTML = colorPickerObject.label;
+  titleSpan.textContent = colorPickerObject.label;
 
   const picker = createColorPickerElement(colorPickerObject, options);
   listElement.appendChildren([
@@ -105,34 +105,12 @@ function createColorSettingsResetButton() {
     applyColorsToCss(globalBookmarkTreeOptions);
     applyColorsToInputs(globalBookmarkTreeOptions);
   });
-  // const resetButton = CreateElementWithClass(
-  //   "button",
-  //   "raised-text-icon-button"
-  // );
-  // resetButton.innerHTML = `<span>Reset Colors</span>` + resetIcon();
-  // resetButton.style = "flex-grow: 1;";
-
-  // resetButton.onclick = () => {
-  //   applyColorsToCss(globalBookmarkTreeOptions);
-  //   applyColorsToInputs(globalBookmarkTreeOptions);
-  // };
-  // return resetButton;
 }
 
 function createColorSettingsApplyButton() {
   return createRaisedButton(`<span>Apply Colors</span>` + colorIcon(), () => {
     setOptions({ colors: getColorsFromInputs() });
   });
-  // const applyButton = CreateElementWithClass(
-  //   "button",
-  //   "raised-text-icon-button"
-  // );
-  // applyButton.innerHTML = `<span>Apply Colors</span>` + colorIcon();
-  // applyButton.style = "flex-grow: 1;";
-  // applyButton.onclick = () => {
-  //   setOptions({ colors: getColorsFromInputs() });
-  // };
-  // return applyButton;
 }
 
 function getColorPickerValue(id) {

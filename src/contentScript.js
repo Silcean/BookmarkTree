@@ -102,13 +102,14 @@ function drawTree() {
   let displaydiv = CreateDivWithClass("displaycontainer");
   let bmdiv = CreateDivWithClass("bmcontainer");
   clearFavorites();
-  bm.innerHTML = "";
+  bm.textContent = "";
+  //This attaches to the dom, so each dom change in this recursive method could trigger dom rerender.
+  // This could be fixed as an easy optimizaiton
   bm.appendChildren([thumbnaildiv, displaydiv, bmdiv]);
   recursiveDrawObj(tree, thumbnaildiv, displaydiv, bmdiv, depth);
 
-  if (favoritesListContainer.innerHTML == "") {
-    favoritesListContainer.innerHTML =
-      "<li><div>No Favorites selected. Select a bookmarkfolder in settings to pin sites to quickaccess, or disable favorites in settings</div></li>";
+  if (favoritesListContainer.textContent == "") {
+    favoritesListContainer.appendChild(createFavoritesPlaceHolder())
   }
 
   globalBookmarkTreeOptions.openedFolders.forEach((e) => {
@@ -223,7 +224,7 @@ function drawFolder(obj, superthumbnaildiv, superdisplaydiv, depth) {
     toggleFolderbyClassIntoDisplaydiv(e.target);
   };
   //folder title
-  thumbnail.innerHTML = obj.title;
+  thumbnail.textContent = obj.title;
   superthumbnaildiv.appendChild(thumbnail);
 
   //containerdiv, is unique to every folder
@@ -275,23 +276,42 @@ function createDeleteButton(id) {
 function drawFavorites(inputFolder) {
   var sites = inputFolder.children;
   for (let i = 0; i < sites.length; i++) {
-    //filter folders
     if (!sites[i].url) return;
-    favoritesListContainer.innerHTML +=
-      "<li>" +
-      '<a href="' +
-      sites[i].url +
-      '" >' +
-      '<div class=imgtile ><img  src="' +
-      getFaviconUrl(sites[i].url) +
-      '" ></div>  ' +
-      sites[i].title +
-      "</a></li>";
+    favoritesListContainer.appendChild(
+      createFavoritesElement(
+        sites[i].title,
+        sites[i].url,
+        getFaviconUrl(sites[i].url)
+      )
+    );
   }
 }
 
+function createFavoritesElement(title, linkUrl, faviconUrl) {
+  const listelement = CreateElementWithClass("li");
+  const linkcontainer = CreateElementWithClass("a");
+  linkcontainer.href = linkUrl;
+  const div = CreateElementWithClass("div", "imgtile");
+  const img = CreateElementWithClass("img","favicon-border-radius");
+  img.src = faviconUrl;
+  div.appendChild(img);
+  linkcontainer.appendChild(div);
+  linkcontainer.appendChild(document.createTextNode(title));
+  listelement.appendChild(linkcontainer);
+  return listelement;
+}
+
+function createFavoritesPlaceHolder() {
+  const listelement = CreateElementWithClass("li");
+  const div = CreateElementWithClass("div");
+  div.textContent =
+    "No Favorites selected. Select a bookmarkfolder in settings to pin sites to quickaccess, or disable favorites in settings";
+  listelement.appendChild(div);
+  return listelement;
+}
+
 function clearFavorites() {
-  favoritesListContainer.innerHTML = "";
+  favoritesListContainer.textContent = "";
 }
 
 function ToggleSwitchListener(switchId, optionsKey) {

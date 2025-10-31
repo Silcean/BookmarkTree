@@ -55,14 +55,14 @@ function getFavIconFirefox(urlString) {
 function drawBookmarkIcon(url) {
   let img = document.createElement("img");
   img.src = getFaviconUrl(url);
-  img.className = "bookmark-line-element-favicon";
+  img.className = "bookmark-line-element-favicon favicon-border-radius";
   return img;
 }
 
 function drawFallbackIcon() {
   let img = document.createElement("img");
   img.src = iconFallbackSrcString();
-  img.className = "bookmark-line-element-favicon";
+  img.className = "bookmark-line-element-favicon favicon-border-radius";
   return img;
 }
 

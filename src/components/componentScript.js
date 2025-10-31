@@ -48,7 +48,7 @@ function createTextInputWithLabel(
     shouldClearInputAfterButtonPress
   );
   const inputLabel = CreateElementWithClass("span");
-  inputLabel.innerHTML = labelstring;
+  inputLabel.textContent = labelstring;
   container.appendChildren([inputLabel, inputfield]);
   //create input field with enter button
   return container;

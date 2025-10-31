@@ -64,7 +64,7 @@ function closeSettings() {
 
 function SettingsHeadline(text) {
   const headline = CreateElementWithClass("h2", "settings-section");
-  headline.innerHTML = text;
+  headline.textContent = text;
   const link = CreateElementWithClass("li");
   link.appendChild(headline);
   return link;

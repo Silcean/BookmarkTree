@@ -42,7 +42,7 @@ class Chips {
       this.getChipId(name)
     );
     const label = CreateElementWithClass("span");
-    label.innerHTML = name;
+    label.textContent = name;
     const button = CreateElementWithClass("button", "text-input-apply-button");
     button.onclick = () => this.removeChip(name);
     button.innerHTML = closeIcon();
@@ -75,7 +75,7 @@ class Chips {
     const container = document.getElementById(
       this.getCurrentChipsContainerid()
     );
-    container.innerHTML = "";
+    container.textContent = "";
     for (let index = 0; index < this.currentChipsValues.length; index++) {
       container.appendChild(
         this.createSingleChip(this.currentChipsValues[index])

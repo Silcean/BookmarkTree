@@ -14,14 +14,14 @@ function initSearch() {
   searchExecuteButton = document.getElementById("search-execute-button");
 
   executeSearch = () => {
-    searchResultList.innerHTML = "";
+    searchResultList.textContent = "";
     term = searchinput.value.trim();
     if (term != "") {
       searchrecurse(tree, term);
     }
   };
   clear = () => {
-    searchResultList.innerHTML = "";
+    searchResultList.textContent = "";
     searchInputField.value = "";
   };
 
