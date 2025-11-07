@@ -57,12 +57,15 @@ body {
   right: 33.33%;
   width: 6px;
   height: 100%;
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--default-text-color);
+  opacity: 30%;
   cursor: ew-resize;
 }
 
 #layout-divider:hover {
-  background: rgba(0, 0, 0, 0.3);
+  /* background: rgba(0, 0, 0, 0.3);
+   */
+   opacity: 50%;
 }
 /* #region favorites are disabled*/
 
@@ -296,6 +299,7 @@ Settings css
 }
 
 .layout-divider-drag-anchor {
+  color: var(--default-text-color);
   display: var(--display-setting-element);
   position: absolute;
   top: 5px;

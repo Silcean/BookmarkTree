@@ -266,7 +266,6 @@ input:checked + .slider:before {
 .text-input:focus-visible {
   background-color: unset;
   outline: unset;
-  color: unset;
 }
 
 .input-field-container {
@@ -277,9 +276,11 @@ input:checked + .slider:before {
   width: fit-content;
   border: none;
   border-radius: 50px;
-  color: var(--accent-text-color);
   background-color: var(--accent-background-color);
   padding: 5px;
+}
+.input-field-container > input{
+  color: var(--accent-text-color);
 }
 /*#endregion Custom text input*/
 
@@ -298,13 +299,12 @@ input:checked + .slider:before {
   font-family: Fira Code;
   color: var(--accent-text-color);
   background-color: var(--accent-background-color);
-  border: 2px solid rgb(70, 70, 70);
+  border: 2px solid var(--accent-text-color);
   border-radius: 15px;
-  color: var(--default-text-color);
 }
 
 .raised-text-icon-button > svg {
-  fill: var(--default-text-color);
+  fill: var(--accent-text-color);
   width: 24px;
   height: 24px;
 }
