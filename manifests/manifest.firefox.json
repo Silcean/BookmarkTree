@@ -1,7 +1,7 @@
 {
   "name": "Visual Bookmark Tree manifest",
   "description": "Adds a graphical GUI to bookmarks in the new tab window",
-  "version": "1.0",
+  "version": "1.1",
   "manifest_version": 2,
   "permissions": [
     "bookmarks",
