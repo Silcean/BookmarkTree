@@ -52,6 +52,11 @@
   transform: scale(1.2) rotate(20deg);
 }
 
+.bookmark-line-element-favicon > svg{
+  fill:var(--default-text-color)
+}
+
+
 .favicon-border-radius {
   border-radius: var(--favicon-border-radius);
 }

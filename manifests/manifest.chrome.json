@@ -1,9 +1,9 @@
 {
   "name": "Bookmark Tree",
   "description": "Adds a grafical gui to bookmarks in the newtab window",
-  "version": "1.0",
+  "version": "1.1",
   "manifest_version": 3,
-  "permissions": ["bookmarks", "activeTab", "favicon", "storage"],
+  "permissions": ["bookmarks", "favicon", "storage","search"],
   "chrome_url_overrides": {
     "newtab": "/newtab.html"
   },

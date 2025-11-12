@@ -52,7 +52,7 @@ body {
 
 /* Drag Divider */
 #layout-divider {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 33.33%;
   width: 6px;
