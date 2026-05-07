@@ -45,7 +45,7 @@ jobs:
         with:
           mode: publish # Or `sign` to sign the extension and publish at a later step (manually).
           extension_id: ${{ vars.CHROME_EXTENSION_ID }}
-          zip_file_path: ./dist/chrome.zip
+          zip_file_path: ./chrome.zip
           client_id: ${{ secrets.GOOGLE_CLIENT_ID }}
           client_secret: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           refresh_token: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
