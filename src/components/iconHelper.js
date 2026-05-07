@@ -10,13 +10,16 @@ function getFaviconChromeExtensionAPI(urlString) {
   url.searchParams.set("size", "32");
   return url.toString();
 }
+function isFirefox() {
+  return typeof browser !== "undefined" &&
+         typeof browser.runtime !== "undefined" &&
+         navigator.userAgent.includes("Firefox");
+}
 function getFaviconUrl(url) {
-  if (typeof browser !== "undefined") {
+  if (isFirefox()) {
     return getFavIconFirefox(url);
-  } else if (typeof chrome !== "undefined") {
-    return getFaviconChromeExtensionAPI(url);
   } else {
-    return getFavIconFirefox(url);
+    return getFaviconChromeExtensionAPI(url);
   }
 }
 

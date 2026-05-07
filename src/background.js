@@ -130,18 +130,23 @@ chrome.bookmarks.onMoved.addListener((id, bookmark) => {
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+function isFirefox() {
+  return typeof browser !== "undefined" &&
+         typeof browser.runtime !== "undefined" &&
+         navigator.userAgent.includes("Firefox");
+}
+
 function getImageBuffer(url) {
-  if (typeof browser !== "undefined") {
+  if (isFirefox()) {
     return getImageAsArrayBufferFirefox(url);
   } else if (typeof chrome !== "undefined") {
     return getImageBufferChrome(url);
-  } else {
-    return getImageAsArrayBufferFirefox(url);
-  }
+  } 
 }
 
 async function getImageBufferChrome(url) {
-  // console.log("attempting to fetch", url);
+   // console.log("attempting to fetch", url);
   const response = await fetch(url);
   if (!response.ok)
     throw new Error("Failed to fetch image: " + response.statusText);
