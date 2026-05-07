@@ -59,7 +59,3 @@ jobs:
           # Only one of the following should be provided:
           # crx_private_key: ${{ secrets.CRX_PRIVATE_KEY }}
           # crx_private_key_path: ./path/to/key.pem
-
-      # Example: Use the output path in a later step
-      - name: Use package artifact path
-        run: echo "Package artifact path: ${{ steps.publish-chrome-extension.outputs.package-artifact-path }}"
